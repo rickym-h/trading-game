@@ -1,0 +1,10 @@
+.appHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #181c24;
+  color: white;
+  font-weight: 600;
+  height: 50px;
+}

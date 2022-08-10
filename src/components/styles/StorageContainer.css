@@ -1,0 +1,31 @@
+.StorageContainer {
+    background-color: red;
+    width: 33vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Cargo {
+    display: grid;
+    grid-template-columns: repeat(7, 60px [col-start]);
+    grid-template-rows: repeat(7,60px [col-start]);
+
+}
+
+.storageCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 95%;
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    font-size: 20px;
+    padding: 0;
+}
+.storageCell:hover {
+    background-color: orange;
+}
