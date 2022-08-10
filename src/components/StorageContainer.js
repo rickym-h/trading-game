@@ -10,61 +10,139 @@ class StorageContainer extends Component {
             cargoItems: [
                 {
                     name: "Machine Part",
-                    width: 1,
+                    width: 3,
                     height: 1,
-                    pos: [0,0],
+                    pos: [1,1],
                 },
                 {
                     name: "Large CardBoard Box",
                     width: 2,
-                    height: 2,
-                    pos: [1,0],
+                    height: 3,
+                    pos: [1,3],
                 },
                 {
                     name: "Tall Vertical Mug",
                     width: 1,
-                    height: 2,
-                    pos: [0,1],
+                    height: 4,
+                    pos: [6,1],
                 },
+                {
+                    name: "Rotund Square",
+                    width: 2,
+                    height: 2,
+                    pos: [3,3],
+                },
+                {
+                    name: "My Pen",
+                    width: 2,
+                    height: 1,
+                    pos: [5,6],
+                }
             ]
 
         }
     }
 
+    getItemFromOrigin = (originCoord) => {
+        for (let item of this.state.cargoItems) {
+            if (this.coordsAreEqual(item.pos, originCoord)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     getItemCells = (item) => {
         let arrayOfCellCoords = [];
-        //let origin = item.pos;
-
+        // Loop through the width and height to get all the cells occupied by the item
         for (let x = 0; x < item.width; x++) {
             for (let y = 0; y < item.height; y++) {
                 let cell = [x+item.pos[0], y+item.pos[1]]
                 arrayOfCellCoords.push(cell)
             }
         }
-
         return arrayOfCellCoords;
     }
 
-    getItemInCell(x, y) {
+    getItemInCell = (coord) => {
+        for (let item of this.state.cargoItems) {
+            let itemCoords = this.getItemCells(item);
+            if (itemCoords.some((itemCoord) => this.coordsAreEqual(itemCoord,coord))) {
+                return item;
+            }
+        }
+        return null;
+    }
 
+    getAllOccupiedCells = () => {
+        let occupiedCells = [];
+        for (let item of this.state.cargoItems) {
+            let cells = this.getItemCells(item);
+            for (let cell of cells) {
+                occupiedCells.push([cell])
+            }
+        }
+        return occupiedCells;
+    }
+
+    coordsAreEqual = (coord1, coord2) => {
+        if (coord1.length !== coord2.length) {
+            return false; }
+        for (let i = 0; i < coord1.length; i++) {
+            if (coord1[i] !== coord2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    isCoordInArray = (coord, listOfCoords) => {
+        for (let i = 0; i < listOfCoords.length; i++) {
+            let checkCoord = listOfCoords[i][0]
+            if (this.coordsAreEqual(coord, checkCoord)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
     render() {
-        console.log(this.getItemCells(this.state.cargoItems[0]))
-        console.log(this.getItemCells(this.state.cargoItems[1]))
-        console.log(this.getItemCells(this.state.cargoItems[2]))
+        console.log(this.getItemInCell([2,2]))
+
+        let occupiedCells = this.getAllOccupiedCells();
 
         // Generate Grid
         let cargoGrid = [];
+        // Set all empty cells
         for (let y = 0; y < 7; y++) {
             for (let x = 0; x < 7; x++) {
-                cargoGrid.push(
-                    <div key={`x${x}x${y}`} className={"storageCell"}>
-                        {`x${x}y${y}`}
+                let cellCoord = [x,y];
 
-                    </div>
-                )
+                // Set empty
+                if (!this.isCoordInArray(cellCoord, occupiedCells)) {
+                    cargoGrid.push(
+                        <div key={`x${x}x${y}`} id={`x${x}x${y}`} className={"emptyCell"}>
+                            {`x${x}x${y}`}
+                        </div>
+                    )
+                }
+
+                // Set origin cells
+                let item = this.getItemFromOrigin(cellCoord)
+                if (item) {
+                    const itemStyle = {
+                        gridRowStart: item.pos[1]+1,
+                        gridRowEnd: `span ${item.height}`,
+                        gridColumnStart: item.pos[0]+1,
+                        gridColumnEnd: `span ${item.width}`,
+                    }
+                    cargoGrid.push(
+                        <div key={`x${x}x${y}${item.name}`} id={`x${x}x${y}${item.name}`} className={`cargoItem`} style={itemStyle}>
+                            {`${item.name}`}
+                        </div>
+                    )
+                }
             }
         }
 
