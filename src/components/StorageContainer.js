@@ -33,7 +33,7 @@ class StorageContainer extends Component {
                     pos: [3,3],
                 },
                 {
-                    name: "My Pen",
+                    name: "Left Handed Dildo",
                     width: 2,
                     height: 1,
                     pos: [5,6],
@@ -74,17 +74,19 @@ class StorageContainer extends Component {
         return null;
     }
 
+    // Gets a list of all the co-ordinates which have a
     getAllOccupiedCells = () => {
         let occupiedCells = [];
         for (let item of this.state.cargoItems) {
             let cells = this.getItemCells(item);
             for (let cell of cells) {
-                occupiedCells.push([cell])
+                occupiedCells.push(cell)
             }
         }
         return occupiedCells;
     }
 
+    // Custom function to determine if two co-ordinates are equal
     coordsAreEqual = (coord1, coord2) => {
         if (coord1.length !== coord2.length) {
             return false; }
@@ -96,9 +98,10 @@ class StorageContainer extends Component {
         return true;
     }
 
+    // Compares a co-ordinate with a list of co-ordinates and returns if the co-ordinate shows up in the list
     isCoordInArray = (coord, listOfCoords) => {
         for (let i = 0; i < listOfCoords.length; i++) {
-            let checkCoord = listOfCoords[i][0]
+            let checkCoord = listOfCoords[i]
             if (this.coordsAreEqual(coord, checkCoord)) {
                 return true;
             }
@@ -108,10 +111,8 @@ class StorageContainer extends Component {
 
 
     render() {
-        console.log(this.getItemInCell([2,2]))
-
         let occupiedCells = this.getAllOccupiedCells();
-
+        console.log(occupiedCells)
         // Generate Grid
         let cargoGrid = [];
         // Set all empty cells
@@ -119,7 +120,7 @@ class StorageContainer extends Component {
             for (let x = 0; x < 7; x++) {
                 let cellCoord = [x,y];
 
-                // Set empty
+                // Set empty Cells
                 if (!this.isCoordInArray(cellCoord, occupiedCells)) {
                     cargoGrid.push(
                         <div key={`x${x}x${y}`} id={`x${x}x${y}`} className={"emptyCell"}>
@@ -128,7 +129,7 @@ class StorageContainer extends Component {
                     )
                 }
 
-                // Set origin cells
+                // Set Item cells
                 let item = this.getItemFromOrigin(cellCoord)
                 if (item) {
                     const itemStyle = {
