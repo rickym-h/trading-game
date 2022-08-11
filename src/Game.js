@@ -34,11 +34,11 @@ class Game extends Component {
     // Populates the cargo storage with 5 random items.
     getRandomPopulatedCargoStorage = () => {
         // Get initial 5 random items
-        let randomItems = itemFunctions.getNRandomCommonItems(5);
 
         // do-while loop populating until valid
         let potentialStorage;
         do {
+            let randomItems = itemFunctions.getNRandomCommonItems(5);
             potentialStorage = [];
             // give every item a random coord
             for (let item of randomItems) {
@@ -60,19 +60,27 @@ class Game extends Component {
 
     // Takes an array that represents a storage container, and returns whether it is a valid possible formation
     isStorageValid = (containerArray, size) => {
+        let cellsArray = []
         let occupiedCells = new ObjectSet();
         for (let object of containerArray) {
             let cellsForCurrentObject = this.getCellsOfObject(object);
             for (let cell of cellsForCurrentObject) {
                 if (occupiedCells.has(cell)) {
-                    console.log("RETURNING FALSE...")
+                    console.log("Population failed : regenerating cargo...")
                     return false;
                 } else {
                     occupiedCells.add(cell);
+                    cellsArray.push(cell)
                 }
             }
         }
+
         // check all cells are in correct range
+        for (let coord of cellsArray) {
+            if (!(coord[0] < size) || !(coord[1] < size)) {
+                return false;
+            }
+        }
         return true;
     }
 
