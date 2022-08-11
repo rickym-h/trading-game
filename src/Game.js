@@ -10,12 +10,24 @@ class Game extends Component {
         super(props);
     }
 
+    handleDragStart = (e) => {
+        console.log("DRAG STARTED")
+        console.log(e)
+    }
+    handleDragEnter = (e) => {
+        console.log("DRAG ENTER")
+        console.log(e)
+    }
+
     render() {
         return (
             <div className={"Game"}>
                 <TradingZone/>
                 <HoldingBay/>
-                <StorageContainer/>
+                <StorageContainer
+                    handleDragStart={this.handleDragStart}
+                    handleDragEnter={this.handleDragEnter}
+                />
             </div>
         )
     }

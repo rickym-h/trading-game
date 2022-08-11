@@ -1,46 +1,26 @@
 import React, {Component} from "react";
 import "./styles/StorageContainer.css"
+import "../items/items"
+import getNRandomCommonItems from "../items/items";
 
 class StorageContainer extends Component {
     constructor(props) {
         super(props);
 
+        let items = getNRandomCommonItems(7);
+        for (let i = 0; i < items.length; i++) {
+            items[i]["pos"] = [i,0]
+        }
+        console.log(items)
+
+
         // Initialise State
         this.state = {
-            cargoItems: [
-                {
-                    name: "Machine Part",
-                    width: 3,
-                    height: 1,
-                    pos: [1,1],
-                },
-                {
-                    name: "Large CardBoard Box",
-                    width: 2,
-                    height: 3,
-                    pos: [1,3],
-                },
-                {
-                    name: "Tall Vertical Mug",
-                    width: 1,
-                    height: 4,
-                    pos: [6,1],
-                },
-                {
-                    name: "Rotund Square",
-                    width: 2,
-                    height: 2,
-                    pos: [3,3],
-                },
-                {
-                    name: "Left Handed Dildo",
-                    width: 2,
-                    height: 1,
-                    pos: [5,6],
-                }
-            ]
-
+            cargoItems: items,
         }
+
+        console.log(this.state.cargoItems)
+
     }
 
     getItemFromOrigin = (originCoord) => {
@@ -79,6 +59,7 @@ class StorageContainer extends Component {
         let occupiedCells = [];
         for (let item of this.state.cargoItems) {
             let cells = this.getItemCells(item);
+            //console.log("item: " + item.pos + " cells: " + cells)
             for (let cell of cells) {
                 occupiedCells.push(cell)
             }
@@ -112,7 +93,6 @@ class StorageContainer extends Component {
 
     render() {
         let occupiedCells = this.getAllOccupiedCells();
-        console.log(occupiedCells)
         // Generate Grid
         let cargoGrid = [];
         // Set all empty cells
@@ -123,7 +103,11 @@ class StorageContainer extends Component {
                 // Set empty Cells
                 if (!this.isCoordInArray(cellCoord, occupiedCells)) {
                     cargoGrid.push(
-                        <div key={`x${x}x${y}`} id={`x${x}x${y}`} className={"emptyCell"}>
+                        <div key={`x${x}x${y}`}
+                             id={`x${x}x${y}`}
+                             className={"emptyCell"}
+                             onDragEnter={this.props.handleDragEnter}
+                        >
                             {`x${x}x${y}`}
                         </div>
                     )
@@ -139,7 +123,13 @@ class StorageContainer extends Component {
                         gridColumnEnd: `span ${item.width}`,
                     }
                     cargoGrid.push(
-                        <div key={`x${x}x${y}${item.name}`} id={`x${x}x${y}${item.name}`} className={`cargoItem`} style={itemStyle}>
+                        <div key={`x${x}x${y}${item.name}`}
+                             id={`x${x}x${y}${item.name}`}
+                             className={`cargoItem`}
+                             style={itemStyle}
+                             draggable={true}
+                             onDragStart={this.props.handleDragStart}
+                        >
                             {`${item.name}`}
                         </div>
                     )
