@@ -1,6 +1,6 @@
 import IDGenerator from "./uniqueIDGenerator";
 
-let legendaryItems = [
+let uncommonItems = [
     {
         name: "Large Mug",
         width: 2,
@@ -21,4 +21,4 @@ let legendaryItems = [
     }
 ];
 
-export default legendaryItems;
+export default uncommonItems;
