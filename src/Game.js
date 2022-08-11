@@ -11,34 +11,26 @@ class Game extends Component {
         super(props);
 
         this.state = {
-            currentlyDraggedItem: null,
+            cargoStorage: [
+
+            ],
+            secureStorage: [
+
+            ],
+            holdingBayStorage: [
+
+            ],
+
         }
-    }
 
-    handleDragStart = (e) => {
-        console.log("DRAG STARTED")
-        let itemID = e.target.dataset.itemid
-        this.setState({
-            currentlyDraggedItem: itemFunctions.getItemByID(itemID),
-        })
-
-        e.dataTransfer.setData("text", itemID)
-        e.dataTransfer.setData("itemObject", JSON.stringify(itemFunctions.getItemByID(itemID)))
-    }
-
-    handleDragDrop = (e) => {
     }
 
     render() {
         return (
             <div className={"Game"}>
                 <TradingZone/>
-                <HoldingBay/>
-                <StorageContainer
-                    handleDragStart={this.handleDragStart}
-                    handleDragDrop={this.handleDragDrop}
-                    currentDraggedItem={this.state.currentlyDraggedItem}
-                />
+                <HoldingBay holdingBayStorage={this.state.holdingBayStorage}/>
+                <StorageContainer cargoStorage={this.state.cargoStorage} secureStorage={this.state.secureStorage}/>
             </div>
         )
     }
