@@ -12,4 +12,18 @@ function getNRandomCommonItems(n){
     return items;
 }
 
-export default getNRandomCommonItems;
+function getItemByID(id) {
+    for (let item of commonItems) {
+        if (item.itemID === id) {
+            return {...item};
+        }
+    }
+    return null;
+}
+
+let itemFunctions = {
+    getItemByID,
+    getNRandomCommonItems
+}
+
+export default itemFunctions;

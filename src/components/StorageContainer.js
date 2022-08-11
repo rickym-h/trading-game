@@ -1,26 +1,22 @@
 import React, {Component} from "react";
 import "./styles/StorageContainer.css"
 import "../items/items"
-import getNRandomCommonItems from "../items/items";
+import itemFunctions from "../items/items";
 
 class StorageContainer extends Component {
     constructor(props) {
         super(props);
 
-        let items = getNRandomCommonItems(7);
+        let items = itemFunctions.getNRandomCommonItems(7);
         for (let i = 0; i < items.length; i++) {
             items[i]["pos"] = [i,0]
         }
-        console.log(items)
 
 
         // Initialise State
         this.state = {
             cargoItems: items,
         }
-
-        console.log(this.state.cargoItems)
-
     }
 
     getItemFromOrigin = (originCoord) => {
@@ -90,6 +86,36 @@ class StorageContainer extends Component {
         return false;
     }
 
+    handleDragStart = (ev) => {
+        this.props.handleDragStart(ev);
+
+    }
+
+    handleDragOver = (ev) => {
+        ev.preventDefault();
+    }
+
+
+    handleDragDrop = (ev) => {
+        ev.preventDefault();
+        this.props.handleDragDrop(ev)
+
+        let placedObject = JSON.parse(ev.dataTransfer.getData("itemObject"))
+        console.log(placedObject)
+
+        let cellCoord = this.getCoordFromCellID(ev.target.id);
+        console.log(cellCoord)
+    }
+
+    getCoordFromCellID = (cellID) => {
+        return cellID
+    }
+
+    canObjectBePlaced = (object, coord) => {
+
+    }
+
+
 
     render() {
         let occupiedCells = this.getAllOccupiedCells();
@@ -103,12 +129,13 @@ class StorageContainer extends Component {
                 // Set empty Cells
                 if (!this.isCoordInArray(cellCoord, occupiedCells)) {
                     cargoGrid.push(
-                        <div key={`x${x}x${y}`}
-                             id={`x${x}x${y}`}
+                        <div key={`x${x}y${y}`}
+                             id={`x${x}y${y}`}
                              className={"emptyCell"}
-                             onDragEnter={this.props.handleDragEnter}
+                             onDragOver={this.handleDragOver}
+                             onDrop={this.handleDragDrop}
                         >
-                            {`x${x}x${y}`}
+                            {`x${x}y${y}`}
                         </div>
                     )
                 }
@@ -125,10 +152,11 @@ class StorageContainer extends Component {
                     cargoGrid.push(
                         <div key={`x${x}x${y}${item.name}`}
                              id={`x${x}x${y}${item.name}`}
+                             data-itemid = {item.itemID}
                              className={`cargoItem`}
                              style={itemStyle}
                              draggable={true}
-                             onDragStart={this.props.handleDragStart}
+                             onDragStart={this.handleDragStart}
                         >
                             {`${item.name}`}
                         </div>

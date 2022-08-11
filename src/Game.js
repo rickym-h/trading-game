@@ -3,20 +3,30 @@ import HoldingBay from "./components/HoldingBay";
 import StorageContainer from "./components/StorageContainer";
 import "./Game.css"
 import TradingZone from "./components/TradingZone";
+import itemFunctions from "./items/items";
 
 class Game extends Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
+
+        this.state = {
+            currentlyDraggedItem: null,
+        }
     }
 
     handleDragStart = (e) => {
         console.log("DRAG STARTED")
-        console.log(e)
+        let itemID = e.target.dataset.itemid
+        this.setState({
+            currentlyDraggedItem: itemFunctions.getItemByID(itemID),
+        })
+
+        e.dataTransfer.setData("text", itemID)
+        e.dataTransfer.setData("itemObject", JSON.stringify(itemFunctions.getItemByID(itemID)))
     }
-    handleDragEnter = (e) => {
-        console.log("DRAG ENTER")
-        console.log(e)
+
+    handleDragDrop = (e) => {
     }
 
     render() {
@@ -26,7 +36,8 @@ class Game extends Component {
                 <HoldingBay/>
                 <StorageContainer
                     handleDragStart={this.handleDragStart}
-                    handleDragEnter={this.handleDragEnter}
+                    handleDragDrop={this.handleDragDrop}
+                    currentDraggedItem={this.state.currentlyDraggedItem}
                 />
             </div>
         )
