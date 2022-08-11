@@ -5,6 +5,15 @@ import "./Game.css"
 import TradingZone from "./components/TradingZone";
 import itemFunctions from "./items/items";
 
+class ObjectSet extends Set{
+    add(elem){
+        return super.add(typeof elem === 'object' ? JSON.stringify(elem) : elem);
+    }
+    has(elem){
+        return super.has(typeof elem === 'object' ? JSON.stringify(elem) : elem);
+    }
+}
+
 class Game extends Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
@@ -40,8 +49,7 @@ class Game extends Component {
                 };
                 potentialStorage.push(object)
             }
-            console.log("iteration again")
-        } while (!this.isStorageValid(potentialStorage))
+        } while (!this.isStorageValid(potentialStorage, 7));
 
         return potentialStorage
     }
@@ -51,18 +59,20 @@ class Game extends Component {
     }
 
     // Takes an array that represents a storage container, and returns whether it is a valid possible formation
-    isStorageValid = (containerArray) => {
-        let occupiedCells = [];
+    isStorageValid = (containerArray, size) => {
+        let occupiedCells = new ObjectSet();
         for (let object of containerArray) {
             let cellsForCurrentObject = this.getCellsOfObject(object);
             for (let cell of cellsForCurrentObject) {
-                if (this.isCoordInArray(cell, occupiedCells)) {
+                if (occupiedCells.has(cell)) {
+                    console.log("RETURNING FALSE...")
                     return false;
                 } else {
-                    occupiedCells.concat(cellsForCurrentObject);
+                    occupiedCells.add(cell);
                 }
             }
         }
+        // check all cells are in correct range
         return true;
     }
 
