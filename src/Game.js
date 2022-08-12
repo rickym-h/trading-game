@@ -21,25 +21,48 @@ class Game extends Component {
 
 
         this.state = {
-            cargoStorage: this.getRandomPopulatedCargoStorage(7),
-            secureStorage: [
-                {
-                    UUID: "1234567890",
-                    item: {
-                        name: "Rusty Pen",
-                        width: 1,
-                        height: 2,
-                        description: "It is a pen...",
-                        value: 10,
-                        itemID: "TEMP ITEM ID",
-                    },
-                    pos: [2,2]
-                }
-            ],
+            cargoStorage: this.getRandomPopulatedCargoStorage(7, 0, 3),
+            secureStorage: this.getRandomPopulatedCargoStorage(5, 0, 2),
             holdingBayStorage: [
 
             ],
         }
+    }
+
+    getCoordFromStringRep = (stringRep) => {
+        console.assert(stringRep.length === 4);
+        return [Number(stringRep.at(1)),Number(stringRep.at(3))]
+    }
+
+    canObjectBePlacedInLocation = (object, targetLocation, UUID) => {
+        switch (targetLocation.at(0)) {
+            case 's':
+                let strongholdItems = this.state.secureStorage;
+                strongholdItems = strongholdItems.filter((it)=>{return it.UUID !== UUID})
+                strongholdItems.push({
+                    UUID: crypto.randomUUID(),
+                    item: object,
+                    pos: this.getCoordFromStringRep(targetLocation.slice(-4))
+                })
+                return this.isStorageValid(strongholdItems, 5);
+            case 'c':
+                let cargoItems = this.state.cargoStorage;
+                cargoItems = cargoItems.filter((it)=>{
+                    return it.UUID !== UUID;
+                })
+                cargoItems.push({
+                    UUID: crypto.randomUUID(),
+                    item: object,
+                    pos: this.getCoordFromStringRep(targetLocation.slice(-4))
+                })
+                return this.isStorageValid(cargoItems, 7);
+            case 'h':
+                console.log("Target is holding bay! - RETURNING FALSE BECAUSE NOT IMPLEMNTED YET")
+                return false;
+            default:
+                console.log("ERROR : target location not recognised!")
+        }
+        return false;
     }
 
     // Populates the cargo storage with 5 random items.
@@ -49,7 +72,22 @@ class Game extends Component {
         let potentialStorage;
         do {
             // Get initial 5 random items
-            let randomItems = itemFunctions.getNRandomCommonItems(5);
+            let randomItems;
+            switch (itemRarity) {
+                case 0:
+                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
+                    break;
+                case 1:
+                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
+                    break;
+                case 2:
+                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
+                    break;
+                default:
+                    // set common and show error
+                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
+                    console.log("ERROR : RARITY NOT RECOGNISED! Defaulting to common items...")
+            }
             potentialStorage = [];
             // give every item a random coord
             for (let item of randomItems) {
@@ -68,7 +106,6 @@ class Game extends Component {
     getItemFromUUID = (UUID) => {
         for (let object of this.state.cargoStorage) {
             if (object.UUID === UUID) {
-                // todo also add orientation
                 return object.item
 
             }
@@ -76,12 +113,52 @@ class Game extends Component {
 
         for (let object of this.state.secureStorage) {
             if (object.UUID === UUID) {
-                // todo also add orientation
                 return object.item
             }
         }
 
-        return ("ERROR - NO ITEM FOUND WITH UUID: " + UUID)
+        return ("ERROR : NO ITEM FOUND WITH UUID: " + UUID)
+    }
+
+    deleteItemByUUID = (UUID) => {
+        let len;
+        let cargoStorage = this.state.cargoStorage;
+        len = cargoStorage.length;
+        cargoStorage = cargoStorage.filter((object) => {return object.UUID !== UUID;})
+        if (cargoStorage.length !== len) {
+            this.setState({
+                cargoStorage: cargoStorage,
+            })
+            return;
+        }
+
+
+        let strongholdStorage = this.state.secureStorage;
+        len = strongholdStorage.length;
+        strongholdStorage = strongholdStorage.filter((object) => {return object.UUID !== UUID;})
+        if (strongholdStorage.length !== len) {
+            this.setState({
+                secureStorage: strongholdStorage,
+            })
+            return;
+        }
+
+        return ("ERROR : NO ITEM FOUND WITH UUID: " + UUID)
+    }
+
+    getAllStoragesWithDeletedUUID = (UUID) => {
+        let newCargoStorage = this.state.cargoStorage;
+        newCargoStorage = newCargoStorage.filter((object) => {return object.UUID !== UUID;})
+        let newStrongHoldStorage = this.state.secureStorage;
+        newStrongHoldStorage = newStrongHoldStorage.filter((object) => {return object.UUID !== UUID;})
+
+        // todo make this return holding bay info when implemented
+        //let newHoldingBayStorage = null;
+
+        return {
+            cargoStorageNEW: newCargoStorage,
+            strongholdStorageNEW: newStrongHoldStorage
+        }
     }
 
     getRandomCoord = (range) => {
@@ -96,7 +173,6 @@ class Game extends Component {
             let cellsForCurrentObject = this.getCellsOfObject(object);
             for (let cell of cellsForCurrentObject) {
                 if (occupiedCells.has(cell)) {
-                    console.log("Population failed : regenerating cargo...")
                     return false;
                 } else {
                     occupiedCells.add(cell);
@@ -159,15 +235,62 @@ class Game extends Component {
         //console.log("GAME RECEIVED: " + ev.dataTransfer.getData("UUID"))
     }
 
+    spawnItemInPos = (item, pos, UUID) => {
+        let allStorageRep = this.getAllStoragesWithDeletedUUID(UUID)
+        switch (pos.at(0)) {
+            case 's':
+                let sCoord = this.getCoordFromStringRep(pos.slice(-4))
+                let sObject = {
+                    UUID: crypto.randomUUID(),
+                    item: item,
+                    pos: sCoord,
+                }
+                let newStrongholdStorage = allStorageRep.strongholdStorageNEW;
+                newStrongholdStorage.push(sObject)
+                this.setState({
+                    secureStorage: newStrongholdStorage,
+                    cargoStorage: allStorageRep.cargoStorageNEW,
+                })
+                break;
+            case 'c':
+                let cCoord = this.getCoordFromStringRep(pos.slice(-4))
+                let cObject = {
+                    UUID: crypto.randomUUID(),
+                    item: item,
+                    pos: cCoord,
+                }
+                let newCargoStorage = allStorageRep.cargoStorageNEW;
+                newCargoStorage.push(cObject)
+                this.setState({
+                    cargoStorage: newCargoStorage,
+                    secureStorage: allStorageRep.strongholdStorageNEW,
+                })
+                break;
+            case 'h':
+                console.log("FAILING TO SPAWN HOLDING BAY ITEM BECAUSE NOT IMPLEMENTED")
+                break;
+            default:
+        }
+    }
+
     handleDragDrop = (ev) => {
-        console.log("DROPPED: ")
-        console.log(ev)
+        // console.log("DROPPED: ")
         // todo process placing item (if possible)
 
-        console.log("dragged item UUID: " + ev.dataTransfer.getData("UUID"))
-        console.log("dragged item: ")
-        console.log(this.getItemFromUUID(ev.dataTransfer.getData("UUID")))
-        console.log("dragged item pos: " + ev.target.id)
+        // console.log("dragged item UUID: " + ev.dataTransfer.getData("UUID"))
+        let UUID = ev.dataTransfer.getData("UUID")
+        let objectItem = this.getItemFromUUID(UUID)
+        let targetPos = ev.target.id
+
+        if (this.canObjectBePlacedInLocation(objectItem, targetPos, UUID)) {
+            console.log("item can be placed - deleting and spawning...")
+            // Deleting old item
+            // Spawn new item
+            this.spawnItemInPos(objectItem, targetPos, UUID)
+
+        } else {
+            console.log("ERROR : item not placeable!")
+        }
     }
 
     render() {
