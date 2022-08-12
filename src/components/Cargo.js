@@ -39,7 +39,6 @@ class Cargo extends Component {
 
 
     generateStorageRepresentation = () => {
-        console.log(this.props.objects)
         let cargoGrid = [];
         let occupiedCells = this.props.getAllOccupiedCells(this.props.objects);
         let originCoords = this.getOriginCoords();

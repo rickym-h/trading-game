@@ -283,7 +283,6 @@ class Game extends Component {
         let targetPos = ev.target.id
 
         if (this.canObjectBePlacedInLocation(objectItem, targetPos, UUID)) {
-            console.log("item can be placed - deleting and spawning...")
             // Deleting old item
             // Spawn new item
             this.spawnItemInPos(objectItem, targetPos, UUID)
