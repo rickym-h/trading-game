@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class Cargo extends Component {
+class Stronghold extends Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
@@ -34,29 +34,30 @@ class Cargo extends Component {
     }
 
     handleDragDrop = (ev) => {
-        this.props.handleDragDrop(ev)
+        // ev.preventDefault();
+        this.props.handleDragDrop(ev);
     }
 
 
     generateStorageRepresentation = () => {
-        let cargoGrid = [];
+        let strongholdGrid = [];
         let occupiedCells = this.props.getAllOccupiedCells(this.props.objects);
         let originCoords = this.getOriginCoords();
 
-        for (let y = 0; y < 7; y++) {
-            for (let x = 0; x < 7; x++) {
+        for (let y = 0; y < 5; y++) {
+            for (let x = 0; x < 5; x++) {
                 let cellCoord = [x,y];
 
                 // If empty cell, push empty cell
                 if (!this.props.isCoordInArray(cellCoord, occupiedCells)) {
-                    cargoGrid.push(
-                        <div key={`c:x${x}y${y}`}
-                             id={`c:x${x}y${y}`}
+                    strongholdGrid.push(
+                        <div key={`s:x${x}y${y}`}
+                             id={`s:x${x}y${y}`}
                              className={"emptyCell"}
                              onDragOver={this.handleDragOver}
                              onDrop={this.handleDragDrop}
                         >
-                            {`c:x${x}y${y}`}
+                            {`s:x${x}y${y}`}
                         </div>
                     )
                     continue;
@@ -73,8 +74,8 @@ class Cargo extends Component {
                         gridColumnStart: object.pos[0]+1,
                         gridColumnEnd: `span ${object.item.width}`,
                     }
-                    cargoGrid.push(
-                        <div key={`c:x${x}x${y}`}
+                    strongholdGrid.push(
+                        <div key={`s:x${x}x${y}`}
                              id={`${object.UUID}`}
                              className={`cargoItem`}
                              style={itemStyle}
@@ -89,18 +90,18 @@ class Cargo extends Component {
 
             }
         }
-        return cargoGrid;
+        return strongholdGrid;
 
     }
 
     render() {
         let storageRepresentation = this.generateStorageRepresentation();
         return (
-            <div className={"Cargo"}>
+            <div className={"Stronghold"}>
                 {storageRepresentation}
             </div>
         )
     }
 }
 
-export default Cargo;
+export default Stronghold;

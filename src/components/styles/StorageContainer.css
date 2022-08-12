@@ -8,10 +8,23 @@
 }
 
 .Cargo {
+    background-color: grey;
+    padding: 10px;
+    border-radius: 5px;
+
     display: grid;
     grid-template-columns: repeat(7, 60px [col-start]);
     grid-template-rows: repeat(7,60px [col-start]);
+}
+.Stronghold {
+    background-color: grey;
+    padding: 10px;
+    border-radius: 5px;
 
+
+    display: grid;
+    grid-template-columns: repeat(5, 60px [col-start]);
+    grid-template-rows: repeat(5,60px [col-start]);
 }
 
 .emptyCell {
@@ -41,5 +54,22 @@
     cursor: grab;
 }
 .cargoItem:hover {
+    background-color: orange;
+}
+
+.strongholdItem {
+    background-color: darkgoldenrod;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 95%;
+    border-radius: 5px;
+    color: black;
+    font-size: 20px;
+    padding: 0;
+    cursor: grab;
+}
+.strongholdItem:hover {
     background-color: orange;
 }

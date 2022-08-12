@@ -21,9 +21,20 @@ class Game extends Component {
 
 
         this.state = {
-            cargoStorage: this.getRandomPopulatedCargoStorage(),
+            cargoStorage: this.getRandomPopulatedCargoStorage(7),
             secureStorage: [
-
+                {
+                    UUID: "1234567890",
+                    item: {
+                        name: "Rusty Pen",
+                        width: 1,
+                        height: 2,
+                        description: "It is a pen...",
+                        value: 10,
+                        itemID: "TEMP ITEM ID",
+                    },
+                    pos: [2,2]
+                }
             ],
             holdingBayStorage: [
 
@@ -32,12 +43,12 @@ class Game extends Component {
     }
 
     // Populates the cargo storage with 5 random items.
-    getRandomPopulatedCargoStorage = () => {
-        // Get initial 5 random items
-
+    getRandomPopulatedCargoStorage = (sizeOfContainer, itemRarity, numOfItems) => {
+        // todo make it account for rarity and num of items
         // do-while loop populating until valid
         let potentialStorage;
         do {
+            // Get initial 5 random items
             let randomItems = itemFunctions.getNRandomCommonItems(5);
             potentialStorage = [];
             // give every item a random coord
@@ -45,13 +56,31 @@ class Game extends Component {
                 let object = {
                     UUID: crypto.randomUUID(),
                     item: {...item},
-                    pos: this.getRandomCoord(7),
+                    pos: this.getRandomCoord(sizeOfContainer),
                 };
                 potentialStorage.push(object)
             }
-        } while (!this.isStorageValid(potentialStorage, 7));
+        } while (!this.isStorageValid(potentialStorage, sizeOfContainer));
 
         return potentialStorage
+    }
+
+    getItemIDFromUUID = (UUID) => {
+        for (let object of this.state.cargoStorage) {
+            if (object.UUID === UUID) {
+                // todo also add orientation
+                return object.item.itemID
+            }
+        }
+
+        for (let object of this.state.secureStorage) {
+            if (object.UUID === UUID) {
+                // todo also add orientation
+                return object.item.itemID
+            }
+        }
+
+        return ("ERROR - NO ITEM FOUND WITH UUID: " + UUID)
     }
 
     getRandomCoord = (range) => {
@@ -125,17 +154,35 @@ class Game extends Component {
         return cells;
     }
 
+    handleDragStart = (ev) => {
+        //console.log("GAME RECEIVED: " + ev.dataTransfer.getData("UUID"))
+    }
+
+    handleDragDrop = (ev) => {
+        console.log("DROPPED: ")
+        console.log(ev)
+        // todo process placing item (if possible)
+
+        console.log("dragged item UUID: " + ev.dataTransfer.getData("UUID"))
+        console.log("dragged item ID: " + this.getItemIDFromUUID(ev.dataTransfer.getData("UUID")))
+        console.log("dragged item pos: " + ev.target.id)
+    }
+
     render() {
         return (
             <div className={"Game"}>
                 <TradingZone/>
-                <HoldingBay holdingBayStorage={this.state.holdingBayStorage}/>
+                <HoldingBay
+                    holdingBayStorage={this.state.holdingBayStorage}
+                />
                 <StorageContainer
                     cargoStorage={this.state.cargoStorage}
                     secureStorage={this.state.secureStorage}
                     getCellsOfObject={this.getCellsOfObject}
                     areCoordsEqual={this.areCoordsEqual}
                     isCoordInArray={this.isCoordInArray}
+                    handleDragStart={this.handleDragStart}
+                    handleDragDrop={this.handleDragDrop}
                 />
             </div>
         )

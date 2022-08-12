@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./styles/StorageContainer.css"
 import "../items/items"
 import Cargo from "./Cargo";
+import Stronghold from "./Stronghold";
 
 class StorageContainer extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -21,11 +22,21 @@ class StorageContainer extends Component {
     render() {
         return (
             <div className={"StorageContainer"}>
+                <Stronghold
+                    objects={this.props.secureStorage}
+                    getAllOccupiedCells={this.getAllOccupiedCells}
+                    areCoordsEqual={this.props.areCoordsEqual}
+                    isCoordInArray={this.props.isCoordInArray}
+                    handleDragStart={this.props.handleDragStart}
+                    handleDragDrop={this.props.handleDragDrop}
+                />
                 <Cargo
                     objects={this.props.cargoStorage}
                     getAllOccupiedCells={this.getAllOccupiedCells}
                     areCoordsEqual={this.props.areCoordsEqual}
                     isCoordInArray={this.props.isCoordInArray}
+                    handleDragStart={this.props.handleDragStart}
+                    handleDragDrop={this.props.handleDragDrop}
                 />
             </div>
         )
