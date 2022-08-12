@@ -65,18 +65,19 @@ class Game extends Component {
         return potentialStorage
     }
 
-    getItemIDFromUUID = (UUID) => {
+    getItemFromUUID = (UUID) => {
         for (let object of this.state.cargoStorage) {
             if (object.UUID === UUID) {
                 // todo also add orientation
-                return object.item.itemID
+                return object.item
+
             }
         }
 
         for (let object of this.state.secureStorage) {
             if (object.UUID === UUID) {
                 // todo also add orientation
-                return object.item.itemID
+                return object.item
             }
         }
 
@@ -164,7 +165,8 @@ class Game extends Component {
         // todo process placing item (if possible)
 
         console.log("dragged item UUID: " + ev.dataTransfer.getData("UUID"))
-        console.log("dragged item ID: " + this.getItemIDFromUUID(ev.dataTransfer.getData("UUID")))
+        console.log("dragged item: ")
+        console.log(this.getItemFromUUID(ev.dataTransfer.getData("UUID")))
         console.log("dragged item pos: " + ev.target.id)
     }
 
