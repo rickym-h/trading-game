@@ -274,8 +274,6 @@ class Game extends Component {
     }
 
     handleDragDrop = (ev) => {
-        // console.log("DROPPED: ")
-        // todo process placing item (if possible)
 
         // console.log("dragged item UUID: " + ev.dataTransfer.getData("UUID"))
         let UUID = ev.dataTransfer.getData("UUID")

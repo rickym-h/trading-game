@@ -1,14 +1,9 @@
 import React, {Component} from "react";
 
 class HoldingBay extends Component {
+    // eslint-disable-next-line no-useless-constructor
     constructor(props) {
         super(props);
-
-        // Initialise State
-        this.state = {
-
-        }
-
     }
 
     render() {
