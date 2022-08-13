@@ -6,10 +6,23 @@ class HoldingBay extends Component {
         super(props);
     }
 
+    generateStorageRepresentation = () => {
+        let storage = [];
+        for (let i = 0; i < this.props.holdingBayStorage.length; i++) {
+            storage.push(
+                <div key={`h:${i}`}>
+                    {`h:${i}:${this.props.holdingBayStorage[i]}`}
+                </div>
+            )
+        }
+        return storage;
+    }
+
     render() {
+        let storageRepresentation = this.generateStorageRepresentation();
         return (
-            <div>
-                HOLDING BAY
+            <div className={"HoldingBay"}>
+                {storageRepresentation}
             </div>
         )
     }

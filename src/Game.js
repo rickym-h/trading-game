@@ -24,7 +24,9 @@ class Game extends Component {
             cargoStorage: this.getRandomPopulatedCargoStorage(7, 0, 3),
             secureStorage: this.getRandomPopulatedCargoStorage(5, 0, 2),
             holdingBayStorage: [
-
+                null,
+                null,
+                null
             ],
         }
     }
