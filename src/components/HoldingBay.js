@@ -8,7 +8,6 @@ class HoldingBay extends Component {
 
 
     handleDragStart = (ev) => {
-        console.log("DRAG STARTED")
         ev.dataTransfer.setData("UUID", ev.target.id)
     }
 
@@ -23,7 +22,6 @@ class HoldingBay extends Component {
     generateStorageRepresentation = () => {
         let storage = [];
         for (let i = 0; i < this.props.holdingBayStorage.length; i++) {
-            // todo either render the item or an empty cell for each thing in the holding bay
             let object = this.props.holdingBayStorage[i];
             if (object !== null) {
                 storage.push(
@@ -50,9 +48,6 @@ class HoldingBay extends Component {
                     </div>
                 )
             }
-            // todo refactor code to allow dragging INTO the holding bay
-
-            // todo reactor code to allow dragging OUT of the holding bay
         }
         return storage;
     }

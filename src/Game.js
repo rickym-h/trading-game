@@ -24,17 +24,7 @@ class Game extends Component {
             cargoStorage: this.getRandomPopulatedCargoStorage(7, 0, 3),
             secureStorage: this.getRandomPopulatedCargoStorage(5, 0, 2),
             holdingBayStorage: [
-                {
-                    UUID: "hxcdasjfgw7yshd",
-                    item: {
-                        name: "Rusty Pen",
-                        width: 1,
-                        height: 2,
-                        description: "It is a pen...",
-                        value: 10,
-                        itemID: "487y90q44qertiouw2",
-                    }
-                },
+                null,
                 null,
                 null
             ],
@@ -141,7 +131,6 @@ class Game extends Component {
         }
 
         for (let object of this.state.holdingBayStorage) {
-            console.log("searching for uuid: " + UUID)
             if (object === null) {
                 continue;
             }
@@ -185,7 +174,6 @@ class Game extends Component {
         let newStrongHoldStorage = this.state.secureStorage;
         newStrongHoldStorage = newStrongHoldStorage.filter((object) => {return object.UUID !== UUID;})
 
-        // todo make this return holding bay info when implemented
         let newHoldingBayStorage = this.state.holdingBayStorage;
         for (let i = 0; i < newHoldingBayStorage.length; i++) {
             if (newHoldingBayStorage[i] === null) {
@@ -322,7 +310,6 @@ class Game extends Component {
                     secureStorage: allStorageRep.strongholdStorageNEW,
                     cargoStorage: allStorageRep.cargoStorageNEW,
                 })
-                console.log("FAILING TO SPAWN HOLDING BAY ITEM BECAUSE NOT IMPLEMENTED")
                 break;
             default:
         }
