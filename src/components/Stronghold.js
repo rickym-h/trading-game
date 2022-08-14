@@ -77,7 +77,7 @@ class Stronghold extends Component {
                     strongholdGrid.push(
                         <div key={`s:x${x}x${y}`}
                              id={`${object.UUID}`}
-                             className={`cargoItem`}
+                             className={`strongholdItem`}
                              style={itemStyle}
                              draggable={true}
                              onDragStart={this.handleDragStart}

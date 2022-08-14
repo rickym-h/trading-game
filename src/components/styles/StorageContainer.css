@@ -73,3 +73,20 @@
 .strongholdItem:hover {
     background-color: orange;
 }
+
+.holdingBayItem {
+    background-color: mediumpurple;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 95%;
+    border-radius: 5px;
+    color: black;
+    font-size: 20px;
+    padding: 0;
+    cursor: grab;
+}
+.holdingBayItem:hover {
+    background-color: purple;
+}

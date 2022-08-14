@@ -24,7 +24,17 @@ class Game extends Component {
             cargoStorage: this.getRandomPopulatedCargoStorage(7, 0, 3),
             secureStorage: this.getRandomPopulatedCargoStorage(5, 0, 2),
             holdingBayStorage: [
-                null,
+                {
+                    UUID: "hxcdasjfgw7yshd",
+                    item: {
+                        name: "Rusty Pen",
+                        width: 1,
+                        height: 2,
+                        description: "It is a pen...",
+                        value: 10,
+                        itemID: "487y90q44qertiouw2",
+                    }
+                },
                 null,
                 null
             ],
@@ -59,8 +69,19 @@ class Game extends Component {
                 })
                 return this.isStorageValid(cargoItems, 7);
             case 'h':
-                console.log("Target is holding bay! - RETURNING FALSE BECAUSE NOT IMPLEMNTED YET")
-                return false;
+                let pos = Number(targetLocation.slice(-1))
+                if (pos > 2 || pos < 0) {
+                    console.log("INVALID POS : " + pos)
+                    return false;
+                }
+
+                // check that item slot is not used in holding bay storage
+                if (this.state.holdingBayStorage[pos] !== null) {
+                    console.log("slot is already being used - invalid drop location")
+                    return false;
+                }
+
+                return true;
             default:
                 console.log("ERROR : target location not recognised!")
         }
@@ -119,6 +140,16 @@ class Game extends Component {
             }
         }
 
+        for (let object of this.state.holdingBayStorage) {
+            console.log("searching for uuid: " + UUID)
+            if (object === null) {
+                continue;
+            }
+            if (object.UUID === UUID) {
+                return object.item
+            }
+        }
+
         return ("ERROR : NO ITEM FOUND WITH UUID: " + UUID)
     }
 
@@ -155,11 +186,20 @@ class Game extends Component {
         newStrongHoldStorage = newStrongHoldStorage.filter((object) => {return object.UUID !== UUID;})
 
         // todo make this return holding bay info when implemented
-        //let newHoldingBayStorage = null;
+        let newHoldingBayStorage = this.state.holdingBayStorage;
+        for (let i = 0; i < newHoldingBayStorage.length; i++) {
+            if (newHoldingBayStorage[i] === null) {
+                continue;
+            }
+            if ((newHoldingBayStorage[i].UUID === UUID)) {
+                newHoldingBayStorage[i] = null;
+            }
+        }
 
         return {
             cargoStorageNEW: newCargoStorage,
-            strongholdStorageNEW: newStrongHoldStorage
+            strongholdStorageNEW: newStrongHoldStorage,
+            holdingBayStorageNEW: newHoldingBayStorage
         }
     }
 
@@ -252,6 +292,7 @@ class Game extends Component {
                 this.setState({
                     secureStorage: newStrongholdStorage,
                     cargoStorage: allStorageRep.cargoStorageNEW,
+                    holdingBayStorage: allStorageRep.holdingBayStorageNEW,
                 })
                 break;
             case 'c':
@@ -266,9 +307,21 @@ class Game extends Component {
                 this.setState({
                     cargoStorage: newCargoStorage,
                     secureStorage: allStorageRep.strongholdStorageNEW,
+                    holdingBayStorage: allStorageRep.holdingBayStorageNEW,
                 })
                 break;
             case 'h':
+                let hObject = {
+                    UUID: crypto.randomUUID(),
+                    item: item,
+                }
+                let newHoldingBayStorage = allStorageRep.holdingBayStorageNEW;
+                newHoldingBayStorage[(Number(pos.slice(-1)))] = hObject
+                this.setState({
+                    holdingBayStorage: newHoldingBayStorage,
+                    secureStorage: allStorageRep.strongholdStorageNEW,
+                    cargoStorage: allStorageRep.cargoStorageNEW,
+                })
                 console.log("FAILING TO SPAWN HOLDING BAY ITEM BECAUSE NOT IMPLEMENTED")
                 break;
             default:
@@ -298,6 +351,7 @@ class Game extends Component {
                 <TradingZone/>
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}
+                    handleDragDrop={this.handleDragDrop}
                 />
                 <StorageContainer
                     cargoStorage={this.state.cargoStorage}
