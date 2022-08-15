@@ -332,6 +332,17 @@ class Game extends Component {
         }
     }
 
+    rotateHoldingBayItem = (i) => {
+        let holdingBayRepresentation = this.state.holdingBayStorage;
+        console.log(holdingBayRepresentation[i])
+        let temp = holdingBayRepresentation[i].item.width;
+        holdingBayRepresentation[i].item.width = holdingBayRepresentation[i].item.height;
+        holdingBayRepresentation[i].item.height = temp;
+        this.setState({
+            holdingBayStorage: holdingBayRepresentation,
+        })
+    }
+
     render() {
         return (
             <div className={"Game"}>
@@ -339,6 +350,7 @@ class Game extends Component {
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}
                     handleDragDrop={this.handleDragDrop}
+                    rotateHoldingBayItem={this.rotateHoldingBayItem}
                 />
                 <StorageContainer
                     cargoStorage={this.state.cargoStorage}

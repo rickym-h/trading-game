@@ -42,7 +42,10 @@ class HoldingBay extends Component {
                         >
                             {`h:${object.item.name}`}
                         </div>
-                         <button className={"rotateButton"}> Rotate Item </button>
+                         <button
+                             className={"rotateButton"}
+                             onClick={() => this.props.rotateHoldingBayItem(i)}
+                         > Rotate Item </button>
                     </div>
                 )
             } else {
