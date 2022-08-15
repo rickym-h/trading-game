@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 
+import './styles/HoldingBay.css'
+
 class HoldingBay extends Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
@@ -24,28 +26,39 @@ class HoldingBay extends Component {
         for (let i = 0; i < this.props.holdingBayStorage.length; i++) {
             let object = this.props.holdingBayStorage[i];
             if (object !== null) {
+                const objectStyle = {
+                    width: `${60*object.item.width}px`,
+                    height: `${60*object.item.height}px`,
+                }
                 storage.push(
-                    <div
-                        key={`h:${i}`}
-                        id={`${object.UUID}`}
-                        className={`holdingBayItem`}
-                        draggable={true}
-                        onDragStart={this.handleDragStart}
-                    >
-                        {`h:${object.item.name}`}
+                    <div className={"holdingBay-row"} key={`h:${i}`}>
+                        <div
+                            key={`h:${i}`}
+                            id={`${object.UUID}`}
+                            className={`holdingBayItem`}
+                            draggable={true}
+                            onDragStart={this.handleDragStart}
+                            style={objectStyle}
+                        >
+                            {`h:${object.item.name}`}
+                        </div>
+                         <button className={"rotateButton"}> Rotate Item </button>
                     </div>
                 )
             } else {
                 storage.push(
-                    <div
-                        key={`h:${i}`}
-                        id={`h:${i}`}
-                        className={"emptyCell"}
-                        onDragOver={this.handleDragOver}
-                        onDrop={this.handleDragDrop}
-                    >
-                        {`h:${i}`}
-                    </div>
+                    <div className={"holdingBay-row"} key={`h:${i}`}>
+                        <div
+                            key={`h:${i}`}
+                            id={`h:${i}`}
+                            className={"emptyCell"}
+                            onDragOver={this.handleDragOver}
+                            onDrop={this.handleDragDrop}
+                        >
+                            {`h:${i}`}
+                        </div>
+                    <button className={"rotateButton"} disabled={true}> Rotate Item </button>
+                </div>
                 )
             }
         }

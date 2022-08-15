@@ -13,8 +13,8 @@
     border-radius: 5px;
 
     display: grid;
-    grid-template-columns: repeat(7, 60px [col-start]);
-    grid-template-rows: repeat(7,60px [col-start]);
+    grid-template-columns: repeat(7, 65px [col-start]);
+    grid-template-rows: repeat(7,65px [col-start]);
 }
 .Stronghold {
     background-color: grey;
@@ -23,16 +23,16 @@
 
 
     display: grid;
-    grid-template-columns: repeat(5, 60px [col-start]);
-    grid-template-rows: repeat(5,60px [col-start]);
+    grid-template-columns: repeat(5, 65px [col-start]);
+    grid-template-rows: repeat(5,65px [col-start]);
 }
 
 .emptyCell {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 95%;
-    height: 95%;
+    width: 60px;
+    height: 60px;
     background-color: white;
     border-radius: 5px;
     color: black;

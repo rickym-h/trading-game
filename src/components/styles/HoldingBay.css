@@ -1,0 +1,28 @@
+.holdingBay-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.rotateButton {
+    background-color: #fff;
+    border: 0 solid #e2e8f0;
+    border-radius: 1.5rem;
+    box-sizing: border-box;
+    color: #0d172a;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 1;
+    padding: 1rem 1.6rem;
+    text-align: center;
+    user-select: none;
+}
+.rotateButton:hover {
+    background-color: orange;
+}
+.rotateButton:disabled {
+    background-color: grey;
+    cursor: auto;
+}
