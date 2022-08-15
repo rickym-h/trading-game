@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/trading-game/static/css/main.181c04cb.css",
-    "main.js": "/trading-game/static/js/main.220aed72.js",
+    "main.css": "/trading-game/static/css/main.4fa60ba8.css",
+    "main.js": "/trading-game/static/js/main.a49c066b.js",
     "index.html": "/trading-game/index.html",
-    "main.181c04cb.css.map": "/trading-game/static/css/main.181c04cb.css.map",
-    "main.220aed72.js.map": "/trading-game/static/js/main.220aed72.js.map"
+    "main.4fa60ba8.css.map": "/trading-game/static/css/main.4fa60ba8.css.map",
+    "main.a49c066b.js.map": "/trading-game/static/js/main.a49c066b.js.map"
   },
   "entrypoints": [
-    "static/css/main.181c04cb.css",
-    "static/js/main.220aed72.js"
+    "static/css/main.4fa60ba8.css",
+    "static/js/main.a49c066b.js"
   ]
 }
