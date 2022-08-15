@@ -28,6 +28,7 @@ class Game extends Component {
                 null,
                 null
             ],
+            credits: 100,
         }
     }
 
@@ -343,10 +344,18 @@ class Game extends Component {
         })
     }
 
+    DEBUG_GIVE_100_CREDITS = () => {
+        this.setState({
+            credits: this.state.credits+100,
+        })
+    }
+
     render() {
         return (
             <div className={"Game"}>
-                <TradingZone/>
+                <TradingZone
+                    give_100_credits={this.DEBUG_GIVE_100_CREDITS}
+                />
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}
                     handleDragDrop={this.handleDragDrop}
@@ -360,6 +369,7 @@ class Game extends Component {
                     isCoordInArray={this.isCoordInArray}
                     handleDragStart={this.handleDragStart}
                     handleDragDrop={this.handleDragDrop}
+                    credits={this.state.credits}
                 />
             </div>
         )

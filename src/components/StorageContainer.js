@@ -22,6 +22,9 @@ class StorageContainer extends Component {
     render() {
         return (
             <div className={"StorageContainer"}>
+                <div>
+                    Credits: {this.props.credits}
+                </div>
                 <Stronghold
                     objects={this.props.secureStorage}
                     getAllOccupiedCells={this.getAllOccupiedCells}

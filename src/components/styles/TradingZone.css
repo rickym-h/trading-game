@@ -1,0 +1,16 @@
+.uniqueTradeRow {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid red;
+}
+
+.uniqueTrade-give {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid red;
+}
+.uniqueTrade-receive {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid red;
+}
