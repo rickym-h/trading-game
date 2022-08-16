@@ -350,11 +350,36 @@ class Game extends Component {
         })
     }
 
+    // Checks whether the holding bay contains a list of items (checking by name to match items)
+    doesHoldingBayHaveItems = (arrayOfItems) => {
+        let holdingBayItems = this.state.holdingBayStorage.filter((item) => {return item !== null})
+        holdingBayItems = holdingBayItems.map((object) => {return object.item})
+
+        while (arrayOfItems.length > 0) {
+            let checkItem = arrayOfItems.pop();
+            console.log("popped " + checkItem.name + " from the checkItems")
+            let lastLength = holdingBayItems.length;
+            console.log("holdingBayItems: ")
+            console.log(holdingBayItems)
+            if (holdingBayItems.filter((item)=>{return item.name !== checkItem.name}).length < lastLength) {
+                // One of the items were popped
+                console.log("the item was in the holding bay")
+                holdingBayItems = holdingBayItems.filter((item)=>{return item.name !== checkItem.name})
+            } else {
+                console.log("the item was not in the holding bay")
+                // checkItem was not in the holdingBayItems
+                return false;
+            }
+        }
+        return true;
+    }
+
     render() {
         return (
             <div className={"Game"}>
                 <TradingZone
                     give_100_credits={this.DEBUG_GIVE_100_CREDITS}
+                    doesHoldingBayHaveItems={this.doesHoldingBayHaveItems}
                 />
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}

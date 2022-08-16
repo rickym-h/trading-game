@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import itemFunctions from "../items/items";
 import "./styles/TradingZone.css"
+import SellItemComponent from "./SellItemComponent";
 
 class TradingZone extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -89,7 +90,7 @@ class TradingZone extends Component {
                 <tr>
                     <td>You Give</td>
                     <td>Trade Button</td>
-                    <td>You Recieve</td>
+                    <td>You Receive</td>
                 </tr>
                 {representation}
                 </tbody>
@@ -102,16 +103,31 @@ class TradingZone extends Component {
             <div>
                 <button onClick={this.props.give_100_credits}>DEVELOPMENT - GIVE 100 CREDITS</button>
 
+                {/*
+                    // TODO ADD name and description of npc?
+                */}
                 <div>
                     Unique Trades:
                     {this.getUniqueTradesRepresentaion()}
                 </div>
                 <div>
                     Selling Items:
+                    {/*
+                    // TODO ADD SELLITEMCOMPONENTS TO SELL ALL ITEMS
+                    */}
+                    {
+                        this.state.sellItems.map((object) => {
+                            return (<SellItemComponent key={crypto.randomUUID()} item={object.item} sellPrice={object.sellPrice} doesHoldingBayHaveItems={this.props.doesHoldingBayHaveItems}/>)
+                        })
+                    }
                 </div>
                 <div>
                     Buying Items:
                 </div>
+
+                {/*
+                    // TODO add button to regenerate NPC
+                */}
             </div>
         )
     }
