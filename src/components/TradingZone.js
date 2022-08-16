@@ -9,14 +9,17 @@ class TradingZone extends Component {
 
         this.state = {
             uniqueTrades: this.generateUniqueTrades(),
+            sellItems: this.generateSellItems(),
         }
     }
 
+    // Generate a list of items which the user with trade for
     generateUniqueTrades = () => {
         let trades = [];
-
         for (let i = 0; i < 3; i++) {
             let give = itemFunctions.getNRandomCommonItems(Math.floor(Math.random() * 3) + 1)
+
+            // todo make receive generate higher rarity items than give (so trading is always valuable to player)
             let receive = itemFunctions.getNRandomCommonItems(Math.floor(Math.random() * 3) + 1)
             trades.push([give, receive])
         }
@@ -24,23 +27,42 @@ class TradingZone extends Component {
         return trades;
     }
 
+    generateSellItems = () => {
+        // get some items to sell
+        let items = itemFunctions.getNRandomCommonItems(6)
+        items = items.map((item) => {
+            let itemValue = item.value;
+            let low = Math.floor(itemValue * 0.7)
+            let high = Math.ceil(itemValue * 1.3)
+            let sellPrice = Math.round(Math.random() * (high - low) + low)
+            return {
+                item: item,
+                sellPrice: sellPrice
+            }
+        })
+        console.log(items)
+        return items;
+    }
+
     getUniqueTradesRepresentaion = () => {
         let representation = [];
         for (let i = 0; i < this.state.uniqueTrades.length; i++) {
             let uniqueTrade = this.state.uniqueTrades[i];
             let uniqueTradeGive = [];
-            for (let giveItem of uniqueTrade[0]) {
+            for (let j = 0; j < uniqueTrade[0].length; j++) {
+                let giveItem = uniqueTrade[0][j];
                 uniqueTradeGive.push(
-                    <div>
+                    <div key={j}>
                         {giveItem.name}
                     </div>
                 )
             }
 
             let uniqueTradeReceive = [];
-            for (let giveItem of uniqueTrade[1]) {
+            for (let j = 0; j < uniqueTrade[1].length; j++) {
+                let giveItem = uniqueTrade[1][j];
                 uniqueTradeReceive.push(
-                    <div>
+                    <div key={j}>
                         {giveItem.name}
                     </div>
                 )
@@ -61,15 +83,16 @@ class TradingZone extends Component {
                 </tr>
             )
         }
-        console.log(representation)
         return (
             <table>
+                <tbody>
                 <tr>
                     <td>You Give</td>
                     <td>Trade Button</td>
                     <td>You Recieve</td>
                 </tr>
                 {representation}
+                </tbody>
             </table>
         );
     }
