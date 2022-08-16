@@ -7,7 +7,7 @@ class SellItemComponent extends Component {
     }
 
     handleClick = () => {
-        console.log(this.props.doesHoldingBayHaveItems([this.props.item]))
+        this.props.userPurchaseSingleItem(this.props.item, this.props.sellPrice)
     }
 
     // Take the item and sell price from props and create interface with button to sell item.

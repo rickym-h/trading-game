@@ -28,7 +28,7 @@ class Game extends Component {
                 null,
                 null
             ],
-            credits: 100,
+            credits: 0,
         }
     }
 
@@ -357,21 +357,40 @@ class Game extends Component {
 
         while (arrayOfItems.length > 0) {
             let checkItem = arrayOfItems.pop();
-            console.log("popped " + checkItem.name + " from the checkItems")
             let lastLength = holdingBayItems.length;
-            console.log("holdingBayItems: ")
-            console.log(holdingBayItems)
             if (holdingBayItems.filter((item)=>{return item.name !== checkItem.name}).length < lastLength) {
                 // One of the items were popped
-                console.log("the item was in the holding bay")
                 holdingBayItems = holdingBayItems.filter((item)=>{return item.name !== checkItem.name})
             } else {
-                console.log("the item was not in the holding bay")
                 // checkItem was not in the holdingBayItems
                 return false;
             }
         }
         return true;
+    }
+
+    userPurchaseSingleItem = (item, price) => {
+        if (price > this.state.credits) {
+            console.log("USER DOES NOT HAVE ENOUGH CREDITS - ABORTING PURCHASE")
+            return
+        }
+        let holdingBayStorage = this.state.holdingBayStorage;
+        for (let i = 0; i < holdingBayStorage.length; i++) {
+            if (holdingBayStorage[i] === null) {
+                holdingBayStorage[i] = {
+                    UUID: crypto.randomUUID(),
+                    item: item,
+                }
+                console.log("Purchase successful, setting state")
+                this.setState({
+                    holdingBayStorage: holdingBayStorage,
+                    credits: this.state.credits - price
+                })
+                return;
+            }
+        }
+        console.log("SPACE NOT FOUND IN HOLDING BAY - ABORTING PURCHASE")
+        return;
     }
 
     render() {
@@ -380,6 +399,7 @@ class Game extends Component {
                 <TradingZone
                     give_100_credits={this.DEBUG_GIVE_100_CREDITS}
                     doesHoldingBayHaveItems={this.doesHoldingBayHaveItems}
+                    userPurchaseSingleItem={this.userPurchaseSingleItem}
                 />
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}

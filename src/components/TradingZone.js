@@ -117,7 +117,13 @@ class TradingZone extends Component {
                     */}
                     {
                         this.state.sellItems.map((object) => {
-                            return (<SellItemComponent key={crypto.randomUUID()} item={object.item} sellPrice={object.sellPrice} doesHoldingBayHaveItems={this.props.doesHoldingBayHaveItems}/>)
+                            return (<SellItemComponent
+                                key={crypto.randomUUID()}
+                                item={object.item}
+                                sellPrice={object.sellPrice}
+                                doesHoldingBayHaveItems={this.props.doesHoldingBayHaveItems}
+                                userPurchaseSingleItem={this.props.userPurchaseSingleItem}
+                            />)
                         })
                     }
                 </div>
