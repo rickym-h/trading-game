@@ -26,7 +26,8 @@ class TradingZone extends Component {
 
     getUniqueTradesRepresentaion = () => {
         let representation = [];
-        for (let uniqueTrade of this.state.uniqueTrades) {
+        for (let i = 0; i < this.state.uniqueTrades.length; i++) {
+            let uniqueTrade = this.state.uniqueTrades[i];
             let uniqueTradeGive = [];
             for (let giveItem of uniqueTrade[0]) {
                 uniqueTradeGive.push(
@@ -47,20 +48,30 @@ class TradingZone extends Component {
 
 
             representation.push(
-                <div className={"uniqueTradeRow"}>
-                    <div className={"uniqueTrade-give"}>
+                <tr className={"uniqueTradeRow"} key={i}>
+                    <td className={"uniqueTrade-give"}>
                         {uniqueTradeGive}
-                    </div>
-                    <div>
+                    </td>
+                    <td>
                         <button className={"unique-trade-button"}> MAKE TRADE </button>
-                    </div>
-                    <div className={"uniqueTrade-receive"}>
+                    </td>
+                    <td className={"uniqueTrade-receive"}>
                         {uniqueTradeReceive}
-                    </div>
-                </div>
+                    </td>
+                </tr>
             )
         }
-        return representation;
+        console.log(representation)
+        return (
+            <table>
+                <tr>
+                    <td>You Give</td>
+                    <td>Trade Button</td>
+                    <td>You Recieve</td>
+                </tr>
+                {representation}
+            </table>
+        );
     }
 
     render() {
