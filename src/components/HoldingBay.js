@@ -40,7 +40,7 @@ class HoldingBay extends Component {
                             onDragStart={this.handleDragStart}
                             style={objectStyle}
                         >
-                            {`h:${object.item.name}`}
+                            {`${object.item.name}`}
                         </div>
                          <button
                              className={"rotateButton"}
@@ -58,7 +58,7 @@ class HoldingBay extends Component {
                             onDragOver={this.handleDragOver}
                             onDrop={this.handleDragDrop}
                         >
-                            {`h:${i}`}
+                            {/*{`h:${i}`}*/}
                         </div>
                     <button className={"rotateButton"} disabled={true}> Rotate Item </button>
                 </div>

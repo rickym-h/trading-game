@@ -57,7 +57,7 @@ class Stronghold extends Component {
                              onDragOver={this.handleDragOver}
                              onDrop={this.handleDragDrop}
                         >
-                            {`s:x${x}y${y}`}
+                            {/*{`s:x${x}y${y}`}*/}
                         </div>
                     )
                     continue;

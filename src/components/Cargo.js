@@ -56,7 +56,7 @@ class Cargo extends Component {
                              onDragOver={this.handleDragOver}
                              onDrop={this.handleDragDrop}
                         >
-                            {`c:x${x}y${y}`}
+                            {/*{`c:x${x}y${y}`}*/}
                         </div>
                     )
                     continue;
