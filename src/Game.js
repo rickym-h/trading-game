@@ -445,6 +445,28 @@ class Game extends Component {
         console.log("SPACE NOT FOUND IN HOLDING BAY - ABORTING PURCHASE")
     }
 
+    userSellSingleItem = (item, price) => {
+        console.log("ATTEMPTING TO SELL FOLLOWING ITEM AT A PRICE OF " + price)
+        console.log(item)
+
+        let holdingBayRepresentation = this.state.holdingBayStorage;
+        for (let i = 0; i < holdingBayRepresentation.length; i++) {
+            if (holdingBayRepresentation[i] === null) {
+                continue;
+            }
+            if (holdingBayRepresentation[i].item.name === item.name) {
+                console.log("FOUND ITEM " + i + " MATCHES ,SETTING TO NULL")
+                holdingBayRepresentation[i] = null;
+                break;
+            }
+        }
+        this.setState({
+            holdingBayStorage: holdingBayRepresentation,
+            credits: this.state.credits + price
+        })
+
+    }
+
     render() {
         return (
             <div className={"Game"}>
@@ -452,6 +474,7 @@ class Game extends Component {
                     give_100_credits={this.DEBUG_GIVE_100_CREDITS}
                     doesHoldingBayHaveItems={this.doesHoldingBayHaveItems}
                     userPurchaseSingleItem={this.userPurchaseSingleItem}
+                    userSellSingleItem={this.userSellSingleItem}
                     transactItems={this.transactItems}
                 />
                 <HoldingBay

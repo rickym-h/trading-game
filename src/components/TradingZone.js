@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import itemFunctions from "../items/items";
 import "./styles/TradingZone.css"
 import SellItemComponent from "./SellItemComponent";
+import BuyItemComponent from "./BuyItemComponent";
 
 class TradingZone extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -13,6 +14,7 @@ class TradingZone extends Component {
 
             uniqueTrades: this.generateUniqueTrades(),
             sellItems: this.generateSellItems(),
+            buyItems: this.generateBuyItems(),
         }
     }
 
@@ -47,14 +49,28 @@ class TradingZone extends Component {
         items = items.map((item) => {
             let itemValue = item.value;
             let low = Math.floor(itemValue * 0.7)
-            let high = Math.ceil(itemValue * 1.3)
+            let high = Math.ceil(itemValue * 1.2)
             let sellPrice = Math.round(Math.random() * (high - low) + low)
             return {
                 item: item,
                 sellPrice: sellPrice
             }
         })
-        console.log(items)
+        return items;
+    }
+    generateBuyItems = () => {
+        // get some items to sell
+        let items = itemFunctions.getNRandomCommonItems(3)
+        items = items.map((item) => {
+            let itemValue = item.value;
+            let low = Math.floor(itemValue * 0.8)
+            let high = Math.ceil(itemValue * 1.3)
+            let buyPrice = Math.round(Math.random() * (high - low) + low)
+            return {
+                item: item,
+                buyPrice: buyPrice
+            }
+        })
         return items;
     }
 
@@ -148,7 +164,6 @@ class TradingZone extends Component {
                                 key={crypto.randomUUID()}
                                 item={object.item}
                                 sellPrice={object.sellPrice}
-                                doesHoldingBayHaveItems={this.props.doesHoldingBayHaveItems}
                                 userPurchaseSingleItem={this.props.userPurchaseSingleItem}
                             />)
                         })
@@ -156,11 +171,20 @@ class TradingZone extends Component {
                 </div>
                 <div>
                     {this.state.NPC_name} is wanting to buy:
+                    {
+                        this.state.buyItems.map((object) => {
+                            return (<BuyItemComponent
+                                key={crypto.randomUUID()}
+                                item={object.item}
+                                buyPrice={object.buyPrice}
+                                userSellSingleItem={this.props.userSellSingleItem}
+                            />)
+                        })
+                    }
                 </div>
 
-                {/*
-                    // TODO add button to regenerate NPC
-                */}
+
+
                 <button onClick={this.handleNewNPCGeneration}> NEW NPC </button>
             </div>
         )
