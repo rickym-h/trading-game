@@ -11,7 +11,6 @@ class TradingZone extends Component {
 
         this.state = {
             NPC_name: this.generateRandomName(),
-
             uniqueTrades: this.generateUniqueTrades(),
             sellItems: this.generateSellItems(),
             buyItems: this.generateBuyItems(),
@@ -58,6 +57,7 @@ class TradingZone extends Component {
         })
         return items;
     }
+
     generateBuyItems = () => {
         // get some items to sell
         let items = itemFunctions.getNRandomCommonItems(3)
@@ -135,14 +135,20 @@ class TradingZone extends Component {
     }
 
     handleNewNPCGeneration = () => {
-        // todo burn some credits
         const TRAVEL_COST = 10;
-        if (this.state.credits < TRAVEL_COST) {
+        if (this.props.currentCredits < TRAVEL_COST) {
             console.log("NOT ENOUGH CREDITS TO TRAVEL - ABORTING NPC GENERATION")
             return;
+        } else {
+            this.props.spendNCredits(10);
         }
         // todo generate new npc
-        console.log("ERROR - NEW NPC GENERATION NOT IMPLEMENTED")
+        this.setState({
+            NPC_name: this.generateRandomName(),
+            uniqueTrades: this.generateUniqueTrades(),
+            sellItems: this.generateSellItems(),
+            buyItems: this.generateBuyItems(),
+        })
     }
 
     render() {
@@ -185,7 +191,7 @@ class TradingZone extends Component {
 
 
 
-                <button onClick={this.handleNewNPCGeneration}> NEW NPC </button>
+                <button onClick={this.handleNewNPCGeneration}> FIND NEW NPC - COST: 10 Credits </button>
             </div>
         )
     }

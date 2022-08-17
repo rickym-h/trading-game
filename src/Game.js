@@ -467,15 +467,23 @@ class Game extends Component {
 
     }
 
+    spendNCredits = (amount) => {
+        this.setState({
+            credits: this.state.credits-amount
+        })
+    }
+
     render() {
         return (
             <div className={"Game"}>
                 <TradingZone
+                    currentCredits={this.state.credits}
                     give_100_credits={this.DEBUG_GIVE_100_CREDITS}
                     doesHoldingBayHaveItems={this.doesHoldingBayHaveItems}
                     userPurchaseSingleItem={this.userPurchaseSingleItem}
                     userSellSingleItem={this.userSellSingleItem}
                     transactItems={this.transactItems}
+                    spendNCredits={this.spendNCredits}
                 />
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}
