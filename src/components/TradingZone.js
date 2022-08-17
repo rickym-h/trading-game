@@ -9,9 +9,23 @@ class TradingZone extends Component {
         super(props);
 
         this.state = {
+            NPC_name: this.generateRandomName(),
+
             uniqueTrades: this.generateUniqueTrades(),
             sellItems: this.generateSellItems(),
         }
+    }
+
+
+    generateRandomName = () => {
+        let names = [
+            "dave",
+            "john",
+            "adam",
+            "emily"
+        ]
+
+        return (names[Math.floor(Math.random()*names.length)])
     }
 
     // Generate a list of items which the user with trade for
@@ -24,13 +38,12 @@ class TradingZone extends Component {
             let receive = itemFunctions.getNRandomCommonItems(Math.floor(Math.random() * 3) + 1)
             trades.push([give, receive])
         }
-
         return trades;
     }
 
     generateSellItems = () => {
         // get some items to sell
-        let items = itemFunctions.getNRandomCommonItems(6)
+        let items = itemFunctions.getNRandomCommonItems(3)
         items = items.map((item) => {
             let itemValue = item.value;
             let low = Math.floor(itemValue * 0.7)
@@ -43,6 +56,10 @@ class TradingZone extends Component {
         })
         console.log(items)
         return items;
+    }
+
+    handleUniqueTradeClick = (uniqueTrade) => {
+        this.props.transactItems(uniqueTrade[1], uniqueTrade[0])
     }
 
     getUniqueTradesRepresentaion = () => {
@@ -76,7 +93,10 @@ class TradingZone extends Component {
                         {uniqueTradeGive}
                     </td>
                     <td>
-                        <button className={"unique-trade-button"}> MAKE TRADE </button>
+                        <button
+                            className={"unique-trade-button"}
+                            onClick={() => this.handleUniqueTradeClick(this.state.uniqueTrades[i])}
+                        > MAKE TRADE </button>
                     </td>
                     <td className={"uniqueTrade-receive"}>
                         {uniqueTradeReceive}
@@ -98,23 +118,30 @@ class TradingZone extends Component {
         );
     }
 
+    handleNewNPCGeneration = () => {
+        // todo burn some credits
+        const TRAVEL_COST = 10;
+        if (this.state.credits < TRAVEL_COST) {
+            console.log("NOT ENOUGH CREDITS TO TRAVEL - ABORTING NPC GENERATION")
+            return;
+        }
+        // todo generate new npc
+        console.log("ERROR - NEW NPC GENERATION NOT IMPLEMENTED")
+    }
+
     render() {
         return (
             <div>
                 <button onClick={this.props.give_100_credits}>DEVELOPMENT - GIVE 100 CREDITS</button>
 
-                {/*
-                    // TODO ADD name and description of npc?
-                */}
+                Name: {this.state.NPC_name}
+
                 <div>
                     Unique Trades:
                     {this.getUniqueTradesRepresentaion()}
                 </div>
                 <div>
-                    Selling Items:
-                    {/*
-                    // TODO ADD SELLITEMCOMPONENTS TO SELL ALL ITEMS
-                    */}
+                    {this.state.NPC_name} is selling:
                     {
                         this.state.sellItems.map((object) => {
                             return (<SellItemComponent
@@ -128,12 +155,13 @@ class TradingZone extends Component {
                     }
                 </div>
                 <div>
-                    Buying Items:
+                    {this.state.NPC_name} is wanting to buy:
                 </div>
 
                 {/*
                     // TODO add button to regenerate NPC
                 */}
+                <button onClick={this.handleNewNPCGeneration}> NEW NPC </button>
             </div>
         )
     }

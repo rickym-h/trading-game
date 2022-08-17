@@ -369,6 +369,59 @@ class Game extends Component {
         return true;
     }
 
+
+    transactItems = (itemsToSpawn, itemsToRemove) => {
+        itemsToSpawn = [...itemsToSpawn]
+        itemsToRemove = [...itemsToRemove]
+        console.log("attempting transaction")
+        console.log("items to spawn:")
+        console.log(itemsToSpawn)
+        console.log("items to remove:")
+        console.log(itemsToRemove)
+
+        // todo complete functionality of item transaction
+
+        let holdingBayRespresentation = this.state.holdingBayStorage;
+        holdingBayRespresentation = holdingBayRespresentation.filter((o)=> {return o !== null;})
+        while (itemsToRemove.length > 0) {
+            let itemToRemove = itemsToRemove.pop();
+            let len = holdingBayRespresentation.length;
+            holdingBayRespresentation = holdingBayRespresentation.filter((o)=>{
+                return o.item.name !== itemToRemove.name;
+            })
+            if (holdingBayRespresentation.length === len) {
+                console.log("following item not in holding bay - ABORTING:")
+                console.log(itemToRemove)
+                return;
+            }
+        }
+        console.log("holdingBayRespresentation now has removed items - checking for space to place itemsToSpawn")
+        console.log(holdingBayRespresentation)
+        if (holdingBayRespresentation.length + itemsToSpawn.length > 3) {
+            console.log("NOT ENOUGH SPACE IN STORAGE TO FINISH TRANSACTION - ABORTING UNIQUE TRADE")
+            return;
+        }
+
+        for (let itemToSpawn of itemsToSpawn) {
+            let newObject = {
+                UUID: crypto.randomUUID(),
+                item: itemToSpawn,
+            }
+            holdingBayRespresentation.push(newObject)
+        }
+
+        let numOfNullItemsToAdd = 3-holdingBayRespresentation.length;
+        for (let i = 0; i<numOfNullItemsToAdd; i++) {
+            holdingBayRespresentation.push(null)
+        }
+
+        this.setState({
+            holdingBayStorage: holdingBayRespresentation,
+        })
+    }
+
+    // todo add functionality to sell items
+
     userPurchaseSingleItem = (item, price) => {
         if (price > this.state.credits) {
             console.log("USER DOES NOT HAVE ENOUGH CREDITS - ABORTING PURCHASE")
@@ -390,7 +443,6 @@ class Game extends Component {
             }
         }
         console.log("SPACE NOT FOUND IN HOLDING BAY - ABORTING PURCHASE")
-        return;
     }
 
     render() {
@@ -400,6 +452,7 @@ class Game extends Component {
                     give_100_credits={this.DEBUG_GIVE_100_CREDITS}
                     doesHoldingBayHaveItems={this.doesHoldingBayHaveItems}
                     userPurchaseSingleItem={this.userPurchaseSingleItem}
+                    transactItems={this.transactItems}
                 />
                 <HoldingBay
                     holdingBayStorage={this.state.holdingBayStorage}
