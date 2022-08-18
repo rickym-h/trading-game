@@ -457,13 +457,14 @@ class Game extends Component {
             if (holdingBayRepresentation[i].item.name === item.name) {
                 console.log("FOUND ITEM " + i + " MATCHES ,SETTING TO NULL")
                 holdingBayRepresentation[i] = null;
-                break;
+                this.setState({
+                    holdingBayStorage: holdingBayRepresentation,
+                    credits: this.state.credits + price
+                })
+                return;
             }
         }
-        this.setState({
-            holdingBayStorage: holdingBayRepresentation,
-            credits: this.state.credits + price
-        })
+        console.log("ITEM NOT FOUND - ABORTING");
 
     }
 
