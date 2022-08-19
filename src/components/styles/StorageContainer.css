@@ -13,8 +13,9 @@
     border-radius: 5px;
 
     display: grid;
-    grid-template-columns: repeat(7, 65px [col-start]);
-    grid-template-rows: repeat(7,65px [col-start]);
+    grid-template-columns: repeat(7, 64px [col-start]);
+    grid-template-rows: repeat(7,64px [col-start]);
+    grid-gap: 1px;
 }
 .Stronghold {
     background-color: grey;
@@ -23,16 +24,17 @@
 
 
     display: grid;
-    grid-template-columns: repeat(5, 65px [col-start]);
-    grid-template-rows: repeat(5,65px [col-start]);
+    grid-template-columns: repeat(5, 64px [col-start]);
+    grid-template-rows: repeat(5,64px [col-start]);
+    grid-gap: 1px;
 }
 
 .emptyCell {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     background-color: white;
     border-radius: 5px;
     color: black;
@@ -45,8 +47,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
     color: black;
     font-size: 20px;
@@ -62,8 +64,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
     color: black;
     font-size: 20px;

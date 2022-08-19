@@ -73,6 +73,9 @@ class Stronghold extends Component {
                         gridRowEnd: `span ${object.item.height}`,
                         gridColumnStart: object.pos[0]+1,
                         gridColumnEnd: `span ${object.item.width}`,
+
+                        backgroundImage: "url(" + object.item.imgSrc + ")",
+                        backgroundSize: "100% 100%",
                     }
                     strongholdGrid.push(
                         <div key={`s:x${x}x${y}`}

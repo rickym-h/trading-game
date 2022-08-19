@@ -1,3 +1,5 @@
+import defaultImg from "./images/default.webp"
+
 import IDGenerator from "./uniqueIDGenerator";
 
 let commonItems = [
@@ -9,6 +11,7 @@ let commonItems = [
         description: "Looks like a piece of scrap metal... sells like a piece of scrap metal!!",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
     {
         name: "Hyperdrive Accelerator",
@@ -17,6 +20,7 @@ let commonItems = [
         description: "Don't make me say these long words...",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
     {
         name: "Non-euclidean Box",
@@ -25,6 +29,7 @@ let commonItems = [
         description: "Some physicist said this was his life's work... but it looks like a nice paperweight!",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
     {
         name: "Singular Penrose Stair",
@@ -33,6 +38,7 @@ let commonItems = [
         description: "Salvaged from the debris of two ancient black holes colliding... Useful as a stool to get to high places!",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
     {
         name: "Perfectly Circular Borromean Rings",
@@ -41,6 +47,7 @@ let commonItems = [
         description: "Useful when you're in need of handcuffing a three armed... creature?",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
     {
         name: "Grapefruit",
@@ -49,6 +56,7 @@ let commonItems = [
         description: "Very stress relieving. I approve.",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
     {
         name: "Powdered Water",
@@ -57,6 +65,7 @@ let commonItems = [
         description: "Useful to transport cheaply with less weight! Just add water!",
         value: 10,
         rarity: 0,
+        imgSrc: defaultImg,
     },
 
 ];

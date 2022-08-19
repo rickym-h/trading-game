@@ -27,8 +27,11 @@ class HoldingBay extends Component {
             let object = this.props.holdingBayStorage[i];
             if (object !== null) {
                 const objectStyle = {
-                    width: `${60*object.item.width}px`,
-                    height: `${60*object.item.height}px`,
+                    width: `${64*object.item.width}px`,
+                    height: `${64*object.item.height}px`,
+
+                    backgroundImage: "url(" + object.item.imgSrc + ")",
+                    backgroundSize: "100% 100%",
                 }
                 storage.push(
                     <div className={"holdingBay-row"} key={`h:${i}`}>
