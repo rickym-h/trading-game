@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import "./styles/ItemDisplay.css"
 
 class ItemDisplay extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -22,12 +23,21 @@ class ItemDisplay extends Component {
         }
         return (
             <div
+                className={"tooltip"}
                 id={this.props.object.UUID}
                 style={imgStyle}
                 draggable={this.props.draggable}
                 onDragStart={this.props.onDragStart}
             >
-                {this.props.object.item.name}
+                {/*{this.props.object.item.name}*/}
+                <span className="tooltiptext">
+                    <p className={"name"}>{this.props.object.item.name}</p>
+                    <p>{this.props.object.item.description}</p>
+                    <p>{"Value: " + this.props.object.item.value}</p>
+                    <p>{"Width: " + this.props.object.item.width}</p>
+                    <p>{"Height: " + this.props.object.item.height}</p>
+
+                </span>
             </div>
         );
     }

@@ -11,14 +11,12 @@ table {
     flex-direction: row;
     border: 1px solid red;
 
-    font-size: smaller;
 }
 .uniqueTrade-receive {
     display: flex;
     flex-direction: row;
     border: 1px solid red;
 
-    font-size: smaller;
 }
 
 .SellItemComponent {
