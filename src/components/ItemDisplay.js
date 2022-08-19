@@ -7,9 +7,12 @@ class ItemDisplay extends Component {
     }
 
     render() {
+        console.log(this.props)
         let imgStyle = {
             backgroundImage: "url(" + this.props.object.item.imgSrc + ")",
             backgroundSize: "100% 100%",
+            width: `${64*this.props.object.item.width}px`,
+            height: `${64*this.props.object.item.height}px`,
         }
         if (this.props.draggable) {
             imgStyle["cursor"] = "grab";

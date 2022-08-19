@@ -1,4 +1,5 @@
 import IDGenerator from "./uniqueIDGenerator";
+import defaultImg from "./images/default.webp";
 
 let unCommonItems = [
     {
@@ -8,6 +9,7 @@ let unCommonItems = [
         description: "Strange... Mystical artifact...",
         value: 10,
         rarity: 1,
+        imgSrc: defaultImg,
     },
     {
         name: "Spoingy Stuff",
@@ -16,6 +18,7 @@ let unCommonItems = [
         description: "Blue, blobby and delectably spoingy!",
         value: 10,
         rarity: 1,
+        imgSrc: defaultImg,
     },
     {
         name: "Mouldy Cushion",
@@ -24,6 +27,7 @@ let unCommonItems = [
         description: "I have no idea why you would want to keep this.",
         value: 10,
         rarity: 1,
+        imgSrc: defaultImg,
     },
     {
         name: "Cardboard Box",
@@ -32,6 +36,7 @@ let unCommonItems = [
         description: "An entirely normal, not suspicious at all cardboard box with entirely benign qualities.",
         value: 10,
         rarity: 1,
+        imgSrc: defaultImg,
     },
 ];
 

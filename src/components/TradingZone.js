@@ -3,6 +3,7 @@ import itemFunctions from "../items/items";
 import "./styles/TradingZone.css"
 import SellItemComponent from "./SellItemComponent";
 import BuyItemComponent from "./BuyItemComponent";
+import ItemDisplay from "./ItemDisplay";
 
 class TradingZone extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -87,20 +88,35 @@ class TradingZone extends Component {
             let uniqueTradeGive = [];
             for (let j = 0; j < uniqueTrade[0].length; j++) {
                 let giveItem = uniqueTrade[0][j];
+                let object = {
+                    UUID: crypto.randomUUID(),
+                    item: giveItem
+                }
                 uniqueTradeGive.push(
-                    <div key={j}>
-                        {giveItem.name}
-                    </div>
+                    // <div key={j}>
+                    //     {giveItem.name}
+                    // </div>
+                    <ItemDisplay
+                        key={j}
+                        object={object}
+                        draggable={false}
+                    />
                 )
             }
 
             let uniqueTradeReceive = [];
             for (let j = 0; j < uniqueTrade[1].length; j++) {
                 let giveItem = uniqueTrade[1][j];
+                let object = {
+                    UUID: crypto.randomUUID(),
+                    item: giveItem
+                }
                 uniqueTradeReceive.push(
-                    <div key={j}>
-                        {giveItem.name}
-                    </div>
+                    <ItemDisplay
+                        key={j}
+                        object={object}
+                        draggable={false}
+                    />
                 )
             }
 

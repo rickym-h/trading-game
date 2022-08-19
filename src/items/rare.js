@@ -1,4 +1,5 @@
 import IDGenerator from "./uniqueIDGenerator";
+import defaultImg from "./images/default.webp";
 
 let rareItems = [
     {
@@ -8,6 +9,7 @@ let rareItems = [
         description: "You can generally find a few of these legs throughout the galaxy. For some reason doesn't prop up tables...",
         value: 10,
         rarity: 2,
+        imgSrc: defaultImg,
     },
     {
         name: "Doorless Fridge",
@@ -16,6 +18,7 @@ let rareItems = [
         description: "A fridge with no door. Definitely not a cool dry place.",
         value: 10,
         rarity: 2,
+        imgSrc: defaultImg,
     },
     {
         name: "Left-Handed Marble",
@@ -24,6 +27,7 @@ let rareItems = [
         description: "DONT USE WITH YOUR RIGHT HAND - VERY DANGEROUS!!!",
         value: 10,
         rarity: 2,
+        imgSrc: defaultImg,
     },
     {
         name: "Ancient Paperclip",
@@ -32,6 +36,7 @@ let rareItems = [
         description: "They spoke of these tools in the ancient scriptures... they say they could bind a thousand pages of crossword puzzles together...",
         value: 10,
         rarity: 2,
+        imgSrc: defaultImg,
     },
     {
         name: "Unreasonably Heavy Mug",
@@ -40,6 +45,7 @@ let rareItems = [
         description: "I'm not picking that up - if you want to buy it, you pick it up.",
         value: 10,
         rarity: 2,
+        imgSrc: defaultImg,
     },
 ];
 

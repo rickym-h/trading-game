@@ -27,17 +27,16 @@ class HoldingBay extends Component {
         for (let i = 0; i < this.props.holdingBayStorage.length; i++) {
             let object = this.props.holdingBayStorage[i];
             if (object !== null) {
-                const objectStyle = {
-                    width: `${64*object.item.width}px`,
-                    height: `${64*object.item.height}px`,
-                }
+                // const objectStyle = {
+                //
+                // }
                 storage.push(
                     <div className={"holdingBay-row"} key={`h:${i}`}>
                         <ItemDisplay
                             object={object}
                             draggable={true}
                             onDragStart={this.handleDragStart}
-                            providedStyles={objectStyle}
+                            //providedStyles={objectStyle}
                         />
                          <button
                              className={"rotateButton"}
