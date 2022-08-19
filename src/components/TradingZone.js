@@ -204,7 +204,7 @@ class TradingZone extends Component {
             <div>
                 <button onClick={this.props.give_100_credits}>DEVELOPMENT - GIVE 100 CREDITS - REMOVE BUTTON ON PRODUCTION</button>
 
-                Name: {this.state.NPC_name}
+                <p>Name: {this.state.NPC_name}</p>
 
                 <div>
                     Unique Trades:

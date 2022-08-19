@@ -7,8 +7,15 @@ class ItemDisplay extends Component {
         super(props);
     }
 
+    handleDragStart = (ev) => {
+        this.props.onDragStart(ev)
+        console.log("ATTEMPTING TO SET IMAGE")
+        let img = new Image()
+        img.src = this.props.object.item.imgSrc
+        ev.dataTransfer.setDragImage(img,0,0)
+    }
+
     render() {
-        console.log(this.props)
         let imgStyle = {
             backgroundImage: "url(" + this.props.object.item.imgSrc + ")",
             backgroundSize: "100% 100%",
@@ -27,7 +34,7 @@ class ItemDisplay extends Component {
                 id={this.props.object.UUID}
                 style={imgStyle}
                 draggable={this.props.draggable}
-                onDragStart={this.props.onDragStart}
+                onDragStart={this.handleDragStart}
             >
                 {/*{this.props.object.item.name}*/}
                 <span className="tooltiptext">
