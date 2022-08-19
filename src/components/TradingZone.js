@@ -151,7 +151,41 @@ class TradingZone extends Component {
         })
     }
 
+    tryUserPurchaseSingleItem = (item, buyPrice, index) => {
+        let result = this.props.userPurchaseSingleItem(item, buyPrice)
+        if (result) {
+            // todo the trade was successful, increase the price
+
+            let sellItemsRepresentation = this.state.sellItems;
+            let currVal = sellItemsRepresentation[index].sellPrice;
+            currVal = Math.floor(currVal*1.2)
+            sellItemsRepresentation[index].sellPrice = currVal;
+
+            this.setState({
+                sellItems: sellItemsRepresentation
+            })
+        }
+    }
+
+    tryUserSellSingleItem = (item, sellPrice, index) => {
+        let result = this.props.userSellSingleItem(item, sellPrice)
+        if (result) {
+            console.log("ATTEMPTING TO DECREASE PRICE")
+            // todo the trade was successful, decrease the price
+
+            let buyItemsRepresentation = this.state.buyItems;
+            let currVal = buyItemsRepresentation[index].buyPrice;
+            currVal = Math.max(1, Math.floor(currVal*0.8))
+            buyItemsRepresentation[index].buyPrice = currVal;
+
+            this.setState({
+                buyItems: buyItemsRepresentation
+            })
+        }
+    }
+
     render() {
+        console.log(this.state)
         return (
             <div>
                 <button onClick={this.props.give_100_credits}>DEVELOPMENT - GIVE 100 CREDITS</button>
@@ -165,12 +199,13 @@ class TradingZone extends Component {
                 <div>
                     {this.state.NPC_name} is selling:
                     {
-                        this.state.sellItems.map((object) => {
+                        this.state.sellItems.map((object, index) => {
                             return (<SellItemComponent
-                                key={crypto.randomUUID()}
+                                key={index}
+                                myIndex={index}
                                 item={object.item}
                                 sellPrice={object.sellPrice}
-                                userPurchaseSingleItem={this.props.userPurchaseSingleItem}
+                                userPurchaseSingleItem={this.tryUserPurchaseSingleItem}
                             />)
                         })
                     }
@@ -178,12 +213,13 @@ class TradingZone extends Component {
                 <div>
                     {this.state.NPC_name} is wanting to buy:
                     {
-                        this.state.buyItems.map((object) => {
+                        this.state.buyItems.map((object, index) => {
                             return (<BuyItemComponent
-                                key={crypto.randomUUID()}
+                                key={index}
+                                myIndex={index}
                                 item={object.item}
                                 buyPrice={object.buyPrice}
-                                userSellSingleItem={this.props.userSellSingleItem}
+                                userSellSingleItem={this.tryUserSellSingleItem}
                             />)
                         })
                     }

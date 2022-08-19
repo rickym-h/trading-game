@@ -7,7 +7,7 @@ class SellItemComponent extends Component {
     }
 
     handleClick = () => {
-        this.props.userPurchaseSingleItem(this.props.item, this.props.sellPrice)
+        this.props.userPurchaseSingleItem(this.props.item, this.props.sellPrice, this.props.myIndex)
     }
 
     // Take the item and sell price from props and create interface with button to sell item.

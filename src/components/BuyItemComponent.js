@@ -7,7 +7,7 @@ class BuyItemComponent extends Component {
     }
 
     handleClick = () => {
-        this.props.userSellSingleItem(this.props.item, this.props.buyPrice)
+        this.props.userSellSingleItem(this.props.item, this.props.buyPrice, this.props.myIndex)
     }
 
 

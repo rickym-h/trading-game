@@ -425,7 +425,7 @@ class Game extends Component {
     userPurchaseSingleItem = (item, price) => {
         if (price > this.state.credits) {
             console.log("USER DOES NOT HAVE ENOUGH CREDITS - ABORTING PURCHASE")
-            return
+            return false;
         }
         let holdingBayStorage = this.state.holdingBayStorage;
         for (let i = 0; i < holdingBayStorage.length; i++) {
@@ -439,10 +439,11 @@ class Game extends Component {
                     holdingBayStorage: holdingBayStorage,
                     credits: this.state.credits - price
                 })
-                return;
+                return true;
             }
         }
         console.log("SPACE NOT FOUND IN HOLDING BAY - ABORTING PURCHASE")
+        return false;
     }
 
     userSellSingleItem = (item, price) => {
@@ -461,11 +462,11 @@ class Game extends Component {
                     holdingBayStorage: holdingBayRepresentation,
                     credits: this.state.credits + price
                 })
-                return;
+                return true;
             }
         }
         console.log("ITEM NOT FOUND - ABORTING");
-
+        return false;
     }
 
     spendNCredits = (amount) => {
