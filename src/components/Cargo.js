@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import ItemDisplay from "./ItemDisplay";
 
 class Cargo extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -73,19 +74,24 @@ class Cargo extends Component {
                         gridColumnStart: object.pos[0]+1,
                         gridColumnEnd: `span ${object.item.width}`,
 
-                        backgroundImage: "url(" + object.item.imgSrc + ")",
-                        backgroundSize: "100% 100%",
                     }
                     cargoGrid.push(
-                        <div key={`c:x${x}x${y}`}
-                             id={`${object.UUID}`}
-                             className={`cargoItem`}
-                             style={itemStyle}
-                             draggable={true}
-                             onDragStart={this.handleDragStart}
-                        >
-                            {`${object.item.name}`}
-                        </div>
+                        // <div key={`c:x${x}x${y}`}
+                        //      id={`${object.UUID}`}
+                        //      className={`cargoItem`}
+                        //      style={itemStyle}
+                        //      draggable={true}
+                        //      onDragStart={this.handleDragStart}
+                        // >
+                        //     {`${object.item.name}`}
+                        // </div>
+                        <ItemDisplay
+                            key={`c:x${x}x${y}`}
+                            object={object}
+                            draggable={true}
+                            onDragStart={this.handleDragStart}
+                            providedStyles={itemStyle}
+                        />
                     )
                 }
 

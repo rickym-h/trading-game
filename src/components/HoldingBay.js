@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 
 import './styles/HoldingBay.css'
+import ItemDisplay from "./ItemDisplay";
 
 class HoldingBay extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -29,22 +30,15 @@ class HoldingBay extends Component {
                 const objectStyle = {
                     width: `${64*object.item.width}px`,
                     height: `${64*object.item.height}px`,
-
-                    backgroundImage: "url(" + object.item.imgSrc + ")",
-                    backgroundSize: "100% 100%",
                 }
                 storage.push(
                     <div className={"holdingBay-row"} key={`h:${i}`}>
-                        <div
-                            key={`h:${i}`}
-                            id={`${object.UUID}`}
-                            className={`holdingBayItem`}
+                        <ItemDisplay
+                            object={object}
                             draggable={true}
                             onDragStart={this.handleDragStart}
-                            style={objectStyle}
-                        >
-                            {`${object.item.name}`}
-                        </div>
+                            providedStyles={objectStyle}
+                        />
                          <button
                              className={"rotateButton"}
                              onClick={() => this.props.rotateHoldingBayItem(i)}
@@ -61,7 +55,6 @@ class HoldingBay extends Component {
                             onDragOver={this.handleDragOver}
                             onDrop={this.handleDragDrop}
                         >
-                            {/*{`h:${i}`}*/}
                         </div>
                     <button className={"rotateButton"} disabled={true}> Rotate Item </button>
                 </div>
