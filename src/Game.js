@@ -81,27 +81,12 @@ class Game extends Component {
 
     // Populates the cargo storage with 5 random items.
     getRandomPopulatedCargoStorage = (sizeOfContainer, itemRarity, numOfItems) => {
-        // todo make it account for rarity and num of items
         // do-while loop populating until valid
         let potentialStorage;
         do {
             // Get initial 5 random items
-            let randomItems;
-            switch (itemRarity) {
-                case 0:
-                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
-                    break;
-                case 1:
-                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
-                    break;
-                case 2:
-                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
-                    break;
-                default:
-                    // set common and show error
-                    randomItems = itemFunctions.getNRandomCommonItems(numOfItems);
-                    console.log("ERROR : RARITY NOT RECOGNISED! Defaulting to common items...")
-            }
+            let randomItems = itemFunctions.getNItemsOfRarity(numOfItems, itemRarity)
+
             potentialStorage = [];
             // give every item a random coord
             for (let item of randomItems) {
@@ -373,13 +358,6 @@ class Game extends Component {
     transactItems = (itemsToSpawn, itemsToRemove) => {
         itemsToSpawn = [...itemsToSpawn]
         itemsToRemove = [...itemsToRemove]
-        console.log("attempting transaction")
-        console.log("items to spawn:")
-        console.log(itemsToSpawn)
-        console.log("items to remove:")
-        console.log(itemsToRemove)
-
-        // todo complete functionality of item transaction
 
         let holdingBayRespresentation = this.state.holdingBayStorage;
         holdingBayRespresentation = holdingBayRespresentation.filter((o)=> {return o !== null;})
@@ -390,8 +368,7 @@ class Game extends Component {
                 return o.item.name !== itemToRemove.name;
             })
             if (holdingBayRespresentation.length === len) {
-                console.log("following item not in holding bay - ABORTING:")
-                console.log(itemToRemove)
+                console.log("Item not in holding bay - ABORTING:")
                 return;
             }
         }
@@ -420,8 +397,6 @@ class Game extends Component {
         })
     }
 
-    // todo add functionality to sell items
-
     userPurchaseSingleItem = (item, price) => {
         if (price > this.state.credits) {
             console.log("USER DOES NOT HAVE ENOUGH CREDITS - ABORTING PURCHASE")
@@ -434,7 +409,6 @@ class Game extends Component {
                     UUID: crypto.randomUUID(),
                     item: item,
                 }
-                console.log("Purchase successful, setting state")
                 this.setState({
                     holdingBayStorage: holdingBayStorage,
                     credits: this.state.credits - price
@@ -447,9 +421,6 @@ class Game extends Component {
     }
 
     userSellSingleItem = (item, price) => {
-        console.log("ATTEMPTING TO SELL FOLLOWING ITEM AT A PRICE OF " + price)
-        console.log(item)
-
         let holdingBayRepresentation = this.state.holdingBayStorage;
         for (let i = 0; i < holdingBayRepresentation.length; i++) {
             if (holdingBayRepresentation[i] === null) {

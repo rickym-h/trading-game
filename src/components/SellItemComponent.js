@@ -11,7 +11,6 @@ class SellItemComponent extends Component {
     }
 
     // Take the item and sell price from props and create interface with button to sell item.
-    // TODO MAKE SURE FUNCTION FOR SELLING IS PASSED DOWN - MUST GIVE ITEM AND REMOVE CURRENCY
     render() {
         return (
             <div className={"SellItemComponent"}>

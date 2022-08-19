@@ -1,7 +1,42 @@
-import "./common"
 import commonItems from "./common";
-// todo add functions for rare and legendary and combination functions
+import unCommonItems from "./uncommon";
+import rareItems from "./rare";
 
+
+function getNItemsOfRarity(numOfItems, rarity) {
+    switch (rarity) {
+        case 0:
+            // Common items
+            return getNRandomCommonItems(numOfItems);
+        case 1:
+            // Uncommon items
+            return getNRandomUnCommonItems(numOfItems);
+        case 2:
+            // Rare items
+            return getNRandomRareItems(numOfItems);
+        default:
+            console.log("ERROR - ITEMS OF RARITY: " + rarity + " NOT FOUND!! RETURNING DEFAULTED COMMON ITEMS");
+            return getNRandomCommonItems(numOfItems);
+    }
+}
+
+function getNRandomRareItems(n) {
+    let items = [];
+    for (let i = 0; i < n; i++) {
+        let copiedItem = {...rareItems[Math.floor(Math.random()*rareItems.length)]}
+        items.push(copiedItem);
+    }
+    return items;
+}
+
+function getNRandomUnCommonItems(n) {
+    let items = [];
+    for (let i = 0; i < n; i++) {
+        let copiedItem = {...unCommonItems[Math.floor(Math.random()*unCommonItems.length)]}
+        items.push(copiedItem);
+    }
+    return items;
+}
 
 function getNRandomCommonItems(n){
     let items = [];
@@ -23,7 +58,7 @@ function getItemByID(id) {
 
 let itemFunctions = {
     getItemByID,
-    getNRandomCommonItems
+    getNItemsOfRarity,
 }
 
 export default itemFunctions;

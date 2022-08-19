@@ -1,62 +1,64 @@
 import IDGenerator from "./uniqueIDGenerator";
 
 let commonItems = [
+
     {
-        name: "Rusty Pen",
-        width: 1,
+        name: "Advanced Machine Part",
+        width: 2,
         height: 1,
-        description: "Strange... Mystical artifact...",
+        description: "Looks like a piece of scrap metal... sells like a piece of scrap metal!!",
         value: 10,
         rarity: 0,
     },
     {
-        name: "Broken Table Leg",
-        width: 1,
-        height: 2,
-        description: "You can generally find a few of these legs throughout the galaxy. For some reason doesn't prop up tables...",
-        value: 10,
-        rarity: 0,
-    },
-    {
-        name: "Mouldy Cushion",
+        name: "Hyperdrive Accelerator",
         width: 1,
         height: 1,
-        description: "I have no idea why you would want to keep this.",
+        description: "Don't make me say these long words...",
         value: 10,
         rarity: 0,
     },
     {
         name: "Non-euclidean Box",
-        width: 3,
-        height: 3,
+        width: 2,
+        height: 2,
         description: "Some physicist said this was his life's work... but it looks like a nice paperweight!",
         value: 10,
         rarity: 0,
     },
     {
-        name: "Spoingy Stuff",
+        name: "Singular Penrose Stair",
         width: 1,
         height: 1,
-        description: "Blue, blobby and delectably spoingy!",
+        description: "Salvaged from the debris of two ancient black holes colliding... Useful as a stool to get to high places!",
         value: 10,
         rarity: 0,
     },
     {
-        name: "Doorless Fridge",
+        name: "Perfectly Circular Borromean Rings",
         width: 1,
-        height: 2,
-        description: "A fridge with no door. Definitely not a cool dry place.",
+        height: 1,
+        description: "Useful when you're in need of handcuffing a three armed... creature?",
         value: 10,
         rarity: 0,
     },
     {
-        name: "Cardboard Box",
-        width: 2,
-        height: 2,
-        description: "An entirely normal, not suspicious at all cardboard box with entirely benign qualities.",
+        name: "Grapefruit",
+        width: 1,
+        height: 1,
+        description: "Very stress relieving. I approve.",
         value: 10,
         rarity: 0,
     },
+    {
+        name: "Powdered Water",
+        width: 1,
+        height: 1,
+        description: "Useful to transport cheaply with less weight! Just add water!",
+        value: 10,
+        rarity: 0,
+    },
+
 ];
 
 for (let item of commonItems) {

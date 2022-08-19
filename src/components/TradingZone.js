@@ -33,10 +33,10 @@ class TradingZone extends Component {
     generateUniqueTrades = () => {
         let trades = [];
         for (let i = 0; i < 3; i++) {
-            let give = itemFunctions.getNRandomCommonItems(Math.floor(Math.random() * 3) + 1)
+            let lowerVal = Math.floor(Math.random()*2)
+            let give = itemFunctions.getNItemsOfRarity(Math.floor(Math.random() * 3) + 1, lowerVal)
 
-            // todo make receive generate higher rarity items than give (so trading is always valuable to player)
-            let receive = itemFunctions.getNRandomCommonItems(Math.floor(Math.random() * 3) + 1)
+            let receive = itemFunctions.getNItemsOfRarity(Math.floor(Math.random() * 3) + 1, lowerVal+1)
             trades.push([give, receive])
         }
         return trades;
@@ -44,7 +44,8 @@ class TradingZone extends Component {
 
     generateSellItems = () => {
         // get some items to sell
-        let items = itemFunctions.getNRandomCommonItems(3)
+        // todo make it sell some common and some uncommon items
+        let items = itemFunctions.getNItemsOfRarity(3, 0)
         items = items.map((item) => {
             let itemValue = item.value;
             let low = Math.floor(itemValue * 0.7)
@@ -60,7 +61,8 @@ class TradingZone extends Component {
 
     generateBuyItems = () => {
         // get some items to sell
-        let items = itemFunctions.getNRandomCommonItems(3)
+        // todo make it buy some common and some uncommon items
+        let items = itemFunctions.getNItemsOfRarity(3, 0)
         items = items.map((item) => {
             let itemValue = item.value;
             let low = Math.floor(itemValue * 0.8)
@@ -142,7 +144,6 @@ class TradingZone extends Component {
         } else {
             this.props.spendNCredits(10);
         }
-        // todo generate new npc
         this.setState({
             NPC_name: this.generateRandomName(),
             uniqueTrades: this.generateUniqueTrades(),
@@ -154,7 +155,6 @@ class TradingZone extends Component {
     tryUserPurchaseSingleItem = (item, buyPrice, index) => {
         let result = this.props.userPurchaseSingleItem(item, buyPrice)
         if (result) {
-            // todo the trade was successful, increase the price
 
             let sellItemsRepresentation = this.state.sellItems;
             let currVal = sellItemsRepresentation[index].sellPrice;
@@ -171,7 +171,6 @@ class TradingZone extends Component {
         let result = this.props.userSellSingleItem(item, sellPrice)
         if (result) {
             console.log("ATTEMPTING TO DECREASE PRICE")
-            // todo the trade was successful, decrease the price
 
             let buyItemsRepresentation = this.state.buyItems;
             let currVal = buyItemsRepresentation[index].buyPrice;
@@ -185,7 +184,6 @@ class TradingZone extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <button onClick={this.props.give_100_credits}>DEVELOPMENT - GIVE 100 CREDITS</button>

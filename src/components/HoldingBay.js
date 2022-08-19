@@ -71,8 +71,6 @@ class HoldingBay extends Component {
     render() {
         let storageRepresentation = this.generateStorageRepresentation();
         return (
-            // todo add button to rotate items
-
             // todo add area to sell/bin items (selling will be at a random fraction of value (e.g. galactic auction so random but wont need trader)) since not specific trade
             <div className={"HoldingBay"}>
                 {storageRepresentation}
