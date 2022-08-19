@@ -9,7 +9,6 @@ class ItemDisplay extends Component {
 
     handleDragStart = (ev) => {
         this.props.onDragStart(ev)
-        console.log("ATTEMPTING TO SET IMAGE")
         let img = new Image()
         img.src = this.props.object.item.imgSrc
         ev.dataTransfer.setDragImage(img,0,0)

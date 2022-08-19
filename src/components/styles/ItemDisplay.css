@@ -7,6 +7,11 @@
     position: relative;
     display: inline-block;
     border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.tooltip:hover {
+    border: 4px solid gold;
 }
 
 .tooltip .tooltiptext {
