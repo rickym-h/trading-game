@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import itemFunctions from "../items/items";
 import "./styles/TradingZone.css"
+import "./styles/TradeItemComponent.css"
+
 import SellItemComponent from "./SellItemComponent";
 import BuyItemComponent from "./BuyItemComponent";
 import ItemDisplay from "./ItemDisplay";
@@ -210,27 +212,32 @@ class TradingZone extends Component {
                     Unique Trades:
                     {this.getUniqueTradesRepresentaion()}
                 </div>
-                <div>
-                    {this.state.NPC_name} is selling:
+                {this.state.NPC_name} is selling:
+                <div className={"TradeItemContainer"}>
+
                     {
                         this.state.sellItems.map((object, index) => {
                             return (<SellItemComponent
                                 key={index}
                                 myIndex={index}
+                                object={object}
                                 item={object.item}
                                 sellPrice={object.sellPrice}
                                 userPurchaseSingleItem={this.tryUserPurchaseSingleItem}
                             />)
                         })
                     }
+
+
                 </div>
-                <div>
-                    {this.state.NPC_name} is wanting to buy:
+                {this.state.NPC_name} is wanting to buy:
+                <div className={"TradeItemContainer"}>
                     {
                         this.state.buyItems.map((object, index) => {
                             return (<BuyItemComponent
                                 key={index}
                                 myIndex={index}
+                                object={object}
                                 item={object.item}
                                 buyPrice={object.buyPrice}
                                 userSellSingleItem={this.tryUserSellSingleItem}

@@ -1,0 +1,28 @@
+.TradeItemContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
+}
+
+.TradeItemComponent {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: dimgray;
+    box-sizing: border-box;
+    border: 5px solid green;
+}
+
+.TradeItemComponentRight {
+    display: flex;
+    flex-direction: column;
+
+    font-size: 20px;
+}
+
+.TradeItemComponentButton {
+    padding: 5px;
+    background-color: goldenrod;
+    border-radius: 5px;
+}

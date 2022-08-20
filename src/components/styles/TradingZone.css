@@ -18,11 +18,3 @@ table {
     border: 1px solid red;
 
 }
-
-.SellItemComponent {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: dimgray;
-    border: 1px solid black;
-}
