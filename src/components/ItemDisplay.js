@@ -6,9 +6,8 @@ class ItemDisplay extends Component {
     constructor(props) {
         super(props);
 
-        // todo Determine pos on screen before setting top to true or false
         this.state = {
-            top: true,
+            top: false,
         }
     }
 
