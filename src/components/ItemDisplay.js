@@ -20,12 +20,10 @@ class ItemDisplay extends Component {
 
     handleMouseEnter = (ev) => {
         if (ev.clientY < window.innerHeight/2) {
-            console.log("top")
             this.setState({
                 top: true,
             })
         } else {
-            console.log("bottom")
             this.setState({
                 top: false,
             })
@@ -38,6 +36,15 @@ class ItemDisplay extends Component {
             backgroundSize: "100% 100%",
             width: `${64*this.props.object.item.width}px`,
             height: `${64*this.props.object.item.height}px`,
+        }
+        if (this.props.forceSize === true) {
+            if (this.props.object.item.width > this.props.object.item.height) {
+                imgStyle.width = "64px";
+                imgStyle.height = `${(this.props.object.item.height / this.props.object.item.width)*64}px`;
+            } else {
+                imgStyle.height = "64px";
+                imgStyle.width = `${(this.props.object.item.width / this.props.object.item.height)*64}px`;
+            }
         }
         if (this.props.draggable) {
             imgStyle["cursor"] = "grab";

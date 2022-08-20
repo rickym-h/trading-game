@@ -100,6 +100,7 @@ class TradingZone extends Component {
                         key={j}
                         object={object}
                         draggable={false}
+                        forceSize={true}
                     />
                 )
             }
@@ -116,6 +117,7 @@ class TradingZone extends Component {
                         key={j}
                         object={object}
                         draggable={false}
+                        forceSize={true}
                     />
                 )
             }
