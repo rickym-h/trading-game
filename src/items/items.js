@@ -3,6 +3,14 @@ import unCommonItems from "./uncommon";
 import rareItems from "./rare";
 
 
+function getNItemsOfRarityUpTo(numOfItems, maxRarity) {
+    let items = []
+    for (let i = 0; i < numOfItems; i++) {
+        items.push(...getNItemsOfRarity(1,Math.floor(Math.random()*(maxRarity+1))))
+    }
+    return items;
+}
+
 function getNItemsOfRarity(numOfItems, rarity) {
     switch (rarity) {
         case 0:
@@ -59,6 +67,7 @@ function getItemByID(id) {
 let itemFunctions = {
     getItemByID,
     getNItemsOfRarity,
+    getNItemsOfRarityUpTo,
 }
 
 export default itemFunctions;

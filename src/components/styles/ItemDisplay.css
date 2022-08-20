@@ -20,7 +20,7 @@
     display: inline;
     font-size: 16px;
     visibility: hidden;
-    width: 128px;
+    width: 192px;
     background-color: #483c3c;
     color: #fff;
     text-align: center;
@@ -30,7 +30,7 @@
     z-index: 1;
 
     left: 50%;
-    margin-left: -64px;
+    margin-left: -96px;
     /*bottom: 120%;*/
     /*top: 120%;*/
 }
