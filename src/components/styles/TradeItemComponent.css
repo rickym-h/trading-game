@@ -1,12 +1,14 @@
 .TradeItemContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 5px;
 }
 
 .TradeItemComponent {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-around;
+    align-items: center;
     padding: 5px;
     border-radius: 5px;
     background-color: dimgray;
@@ -15,14 +17,23 @@
 }
 
 .TradeItemComponentRight {
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
     font-size: 20px;
+}
+p {
+    margin: 0;
 }
 
 .TradeItemComponentButton {
     padding: 5px;
     background-color: goldenrod;
     border-radius: 5px;
+}
+.TradeItemComponentButton:hover {
+    background-color: gold;
+    cursor: pointer;
 }
