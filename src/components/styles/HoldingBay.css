@@ -1,3 +1,8 @@
+.HoldingBay {
+    border: 1px solid green;
+    width: 33vw;
+}
+
 .holdingBay-row {
     display: flex;
     flex-direction: row;

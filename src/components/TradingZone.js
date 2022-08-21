@@ -51,7 +51,7 @@ class TradingZone extends Component {
         items = items.map((item) => {
             let itemValue = item.value;
             let low = Math.floor(itemValue * 0.7)
-            let high = Math.ceil(itemValue * 1.2)
+            let high = Math.ceil(itemValue * 1)
             let sellPrice = Math.round(Math.random() * (high - low) + low)
             return {
                 item: item,
@@ -66,7 +66,7 @@ class TradingZone extends Component {
         let items = itemFunctions.getNItemsOfRarityUpTo(6, 1)
         items = items.map((item) => {
             let itemValue = item.value;
-            let low = Math.floor(itemValue * 0.8)
+            let low = Math.floor(itemValue * 1)
             let high = Math.ceil(itemValue * 1.3)
             let buyPrice = Math.round(Math.random() * (high - low) + low)
             return {
@@ -176,7 +176,7 @@ class TradingZone extends Component {
 
             let sellItemsRepresentation = this.state.sellItems;
             let currVal = sellItemsRepresentation[index].sellPrice;
-            currVal = Math.floor(currVal*1.2)
+            currVal = Math.floor(currVal*1.1)
             sellItemsRepresentation[index].sellPrice = currVal;
 
             this.setState({
@@ -192,7 +192,7 @@ class TradingZone extends Component {
 
             let buyItemsRepresentation = this.state.buyItems;
             let currVal = buyItemsRepresentation[index].buyPrice;
-            currVal = Math.max(1, Math.floor(currVal*0.8))
+            currVal = Math.max(1, Math.floor(currVal*0.0))
             buyItemsRepresentation[index].buyPrice = currVal;
 
             this.setState({
@@ -203,7 +203,7 @@ class TradingZone extends Component {
 
     render() {
         return (
-            <div>
+            <div className={"TradingZone"}>
                 <button onClick={this.props.give_100_credits}>DEVELOPMENT - GIVE 100 CREDITS - REMOVE BUTTON ON PRODUCTION</button>
 
                 <p>Name: {this.state.NPC_name}</p>

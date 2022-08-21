@@ -1,6 +1,7 @@
 import IDGenerator from "./uniqueIDGenerator";
 import defaultImg from "./images/default.webp";
 
+// todo change values and sizes to be more interesting and unique
 let rareItems = [
     {
         name: "Broken Table Leg",

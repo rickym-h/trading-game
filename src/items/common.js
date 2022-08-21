@@ -2,6 +2,9 @@ import defaultImg from "./images/default.webp"
 
 import IDGenerator from "./uniqueIDGenerator";
 
+// All values between 1-99;
+// todo change values and sizes to be more interesting and unique
+
 let commonItems = [
 
     {
@@ -9,7 +12,7 @@ let commonItems = [
         width: 2,
         height: 1,
         description: "Looks like a piece of scrap metal... sells like a piece of scrap metal!!",
-        value: 10,
+        value: 20,
         rarity: 0,
         imgSrc: defaultImg,
     },

@@ -78,9 +78,9 @@ class ItemDisplay extends Component {
                     style={tooltipStyle}
                 >
                     <p className={"name"}>{this.props.object.item.name}</p>
+                    <p><strong>{`Value: `}</strong>{`${this.props.object.item.value} Credits`}</p>
+                    <p><strong>{`Size: `}</strong>{`${this.props.object.item.width} x ${this.props.object.item.height}`}</p>
                     <p>{this.props.object.item.description}</p>
-                    <p>{`Value: ${this.props.object.item.value} Credits`}</p>
-                    <p>{`Size: ${this.props.object.item.width} x ${this.props.object.item.height}`}</p>
 
                 </span>
             </div>
