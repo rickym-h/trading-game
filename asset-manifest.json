@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/trading-game/static/css/main.5bc09392.css",
-    "main.js": "/trading-game/static/js/main.4a43a4a8.js",
+    "main.js": "/trading-game/static/js/main.69051022.js",
     "static/media/advanced_machine_part.webp": "/trading-game/static/media/advanced_machine_part.aecbe9fdb2e8da419b20.webp",
     "static/media/default.webp": "/trading-game/static/media/default.321e9bc7b50a69be5480.webp",
     "static/media/mouldy_cushion.webp": "/trading-game/static/media/mouldy_cushion.df0a955bd8a035af452c.webp",
@@ -16,10 +16,10 @@
     "static/media/grapefruit.webp": "/trading-game/static/media/grapefruit.d0c86eb44883d6ef1c20.webp",
     "static/media/spoingy_stuff.webp": "/trading-game/static/media/spoingy_stuff.c1d9b62364b852cfe1c3.webp",
     "main.5bc09392.css.map": "/trading-game/static/css/main.5bc09392.css.map",
-    "main.4a43a4a8.js.map": "/trading-game/static/js/main.4a43a4a8.js.map"
+    "main.69051022.js.map": "/trading-game/static/js/main.69051022.js.map"
   },
   "entrypoints": [
     "static/css/main.5bc09392.css",
-    "static/js/main.4a43a4a8.js"
+    "static/js/main.69051022.js"
   ]
 }
