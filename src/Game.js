@@ -446,6 +446,28 @@ class Game extends Component {
         })
     }
 
+    auctionHoldingBayItems = () => {
+        // todo implement item auctioning
+        console.log(this.state.holdingBayStorage)
+        let total = 0;
+        for (let obj of this.state.holdingBayStorage) {
+            if (obj === null) {continue;}
+            total += obj.item.value;
+        }
+        total = Math.floor(total * (0.5 + Math.random()))
+        console.log("giving " + total + " credits")
+        this.setState({
+            credits: this.state.credits + total,
+            holdingBayStorage: [null,null,null],
+        })
+    }
+
+    giveCredits = (amount) => {
+        this.setState({
+            credits: this.state.credits+amount
+        })
+    }
+
     render() {
         return (
             <div className={"Game"}>
@@ -462,6 +484,7 @@ class Game extends Component {
                     holdingBayStorage={this.state.holdingBayStorage}
                     handleDragDrop={this.handleDragDrop}
                     rotateHoldingBayItem={this.rotateHoldingBayItem}
+                    auctionHoldingBayItems={this.auctionHoldingBayItems}
                 />
                 <StorageContainer
                     cargoStorage={this.state.cargoStorage}
