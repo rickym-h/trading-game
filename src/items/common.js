@@ -1,4 +1,9 @@
 import defaultImg from "./images/default.webp"
+import advanced_machine_part from "./images/advanced_machine_part.webp"
+import grapefruit from "./images/grapefruit.webp"
+import perfectly_circular_borromean_rings from "./images/perfectly_circular_borromean_rings.webp"
+import powdered_water from "./images/powdered_water.webp"
+import singular_penrose_stair from "./images/singular_penrose_stair.webp"
 
 import IDGenerator from "./uniqueIDGenerator";
 
@@ -14,12 +19,12 @@ let commonItems = [
         description: "Looks like a piece of scrap metal... sells like a piece of scrap metal!!",
         value: 20,
         rarity: 0,
-        imgSrc: defaultImg,
+        imgSrc: advanced_machine_part,
     },
     {
         name: "Hyperdrive Accelerator",
-        width: 1,
-        height: 1,
+        width: 2,
+        height: 3,
         description: "Don't make me say these long words...",
         value: 10,
         rarity: 0,
@@ -41,7 +46,7 @@ let commonItems = [
         description: "Salvaged from the debris of two ancient black holes colliding... Useful as a stool to get to high places!",
         value: 10,
         rarity: 0,
-        imgSrc: defaultImg,
+        imgSrc: singular_penrose_stair,
     },
     {
         name: "Perfectly Circular Borromean Rings",
@@ -50,7 +55,7 @@ let commonItems = [
         description: "Useful when you're in need of handcuffing a three armed... creature?",
         value: 10,
         rarity: 0,
-        imgSrc: defaultImg,
+        imgSrc: perfectly_circular_borromean_rings,
     },
     {
         name: "Grapefruit",
@@ -59,7 +64,7 @@ let commonItems = [
         description: "Very stress relieving. I approve.",
         value: 10,
         rarity: 0,
-        imgSrc: defaultImg,
+        imgSrc: grapefruit,
     },
     {
         name: "Powdered Water",
@@ -68,7 +73,7 @@ let commonItems = [
         description: "Useful to transport cheaply with less weight! Just add water!",
         value: 10,
         rarity: 0,
-        imgSrc: defaultImg,
+        imgSrc: powdered_water,
     },
 
 ];

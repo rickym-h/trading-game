@@ -4,22 +4,27 @@
 }
 
 table {
+    width: 100%;
     border: 1px solid green;
 }
 
 .uniqueTradeRow {
     border: 1px solid green;
+    align-items: center;
+    height: 100%;
 }
 
 .uniqueTrade-give {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     border: 1px solid red;
-
 }
 .uniqueTrade-receive {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     border: 1px solid red;
-
 }

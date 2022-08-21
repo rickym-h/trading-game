@@ -248,7 +248,7 @@ class TradingZone extends Component {
 
 
 
-                <button onClick={this.handleNewNPCGeneration}> FIND NEW NPC - COST: 10 Credits </button>
+                <button onClick={this.handleNewNPCGeneration}> FIND NEW NPC - COST: 5 Credits </button>
             </div>
         )
     }
