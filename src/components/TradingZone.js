@@ -155,12 +155,12 @@ class TradingZone extends Component {
     }
 
     handleNewNPCGeneration = () => {
-        const TRAVEL_COST = 10;
+        const TRAVEL_COST = 5;
         if (this.props.currentCredits < TRAVEL_COST) {
             console.log("NOT ENOUGH CREDITS TO TRAVEL - ABORTING NPC GENERATION")
             return;
         } else {
-            this.props.spendNCredits(10);
+            this.props.spendNCredits(TRAVEL_COST);
         }
         this.setState({
             NPC_name: this.generateRandomName(),
@@ -192,7 +192,7 @@ class TradingZone extends Component {
 
             let buyItemsRepresentation = this.state.buyItems;
             let currVal = buyItemsRepresentation[index].buyPrice;
-            currVal = Math.max(1, Math.floor(currVal*0.0))
+            currVal = Math.max(1, Math.floor(currVal*0.9))
             buyItemsRepresentation[index].buyPrice = currVal;
 
             this.setState({
