@@ -1,5 +1,8 @@
 import IDGenerator from "./uniqueIDGenerator";
 import defaultImg from "./images/default.webp";
+import rusty_pen from "./images/rusty_pen.webp"
+import spoingy_stuff from "./images/spoingy_stuff.webp"
+import mouldy_cushion from "./images/mouldy_cushion.webp"
 
 // todo change values and sizes to be more interesting and unique
 let unCommonItems = [
@@ -10,7 +13,7 @@ let unCommonItems = [
         description: "Strange... Mystical artifact...",
         value: 10,
         rarity: 1,
-        imgSrc: defaultImg,
+        imgSrc: rusty_pen,
     },
     {
         name: "Spoingy Stuff",
@@ -19,7 +22,7 @@ let unCommonItems = [
         description: "Blue, blobby and delectably spoingy!",
         value: 10,
         rarity: 1,
-        imgSrc: defaultImg,
+        imgSrc: spoingy_stuff,
     },
     {
         name: "Mouldy Cushion",
@@ -28,7 +31,7 @@ let unCommonItems = [
         description: "I have no idea why you would want to keep this.",
         value: 10,
         rarity: 1,
-        imgSrc: defaultImg,
+        imgSrc: mouldy_cushion,
     },
     {
         name: "Cardboard Box",

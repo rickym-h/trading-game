@@ -1,5 +1,8 @@
 import IDGenerator from "./uniqueIDGenerator";
 import defaultImg from "./images/default.webp";
+import left_handed_marble from "./images/left_handed_marble.webp";
+import ancient_paperclip from "./images/ancient_paperclip.webp";
+import unreasonably_heavy_mug from "./images/unreasonably_heavy_mug.webp";
 
 // todo change values and sizes to be more interesting and unique
 let rareItems = [
@@ -28,7 +31,7 @@ let rareItems = [
         description: "DONT USE WITH YOUR RIGHT HAND - VERY DANGEROUS!!!",
         value: 10,
         rarity: 2,
-        imgSrc: defaultImg,
+        imgSrc: left_handed_marble,
     },
     {
         name: "Ancient Paperclip",
@@ -37,7 +40,7 @@ let rareItems = [
         description: "They spoke of these tools in the ancient scriptures... they say they could bind a thousand pages of crossword puzzles together...",
         value: 10,
         rarity: 2,
-        imgSrc: defaultImg,
+        imgSrc: ancient_paperclip,
     },
     {
         name: "Unreasonably Heavy Mug",
@@ -46,7 +49,7 @@ let rareItems = [
         description: "I'm not picking that up - if you want to buy it, you pick it up.",
         value: 10,
         rarity: 2,
-        imgSrc: defaultImg,
+        imgSrc: unreasonably_heavy_mug,
     },
 ];
 
