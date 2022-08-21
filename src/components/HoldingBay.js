@@ -74,7 +74,7 @@ class HoldingBay extends Component {
             // todo add area to sell/bin items (selling will be at a random fraction of value (e.g. galactic auction so random but wont need trader)) since not specific trade
             <div className={"HoldingBay"}>
                 {storageRepresentation}
-                <button onClick={this.handleAuctionItems}>Auction off Items</button>
+                <button className={"TradeItemComponentButton"} onClick={this.handleAuctionItems}>Auction off Items</button>
             </div>
         )
     }
