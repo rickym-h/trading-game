@@ -176,7 +176,7 @@ class TradingZone extends Component {
 
             let sellItemsRepresentation = this.state.sellItems;
             let currVal = sellItemsRepresentation[index].sellPrice;
-            currVal = Math.floor(currVal*1.1)
+            currVal = Math.ceil(currVal*1.1)
             sellItemsRepresentation[index].sellPrice = currVal;
 
             this.setState({
