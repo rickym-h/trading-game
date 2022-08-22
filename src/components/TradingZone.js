@@ -188,8 +188,6 @@ class TradingZone extends Component {
     tryUserSellSingleItem = (item, sellPrice, index) => {
         let result = this.props.userSellSingleItem(item, sellPrice)
         if (result) {
-            console.log("ATTEMPTING TO DECREASE PRICE")
-
             let buyItemsRepresentation = this.state.buyItems;
             let currVal = buyItemsRepresentation[index].buyPrice;
             currVal = Math.max(1, Math.floor(currVal*0.9))

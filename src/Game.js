@@ -14,6 +14,32 @@ class ObjectSet extends Set{
     }
 }
 
+function storageAvailable(type) {
+    let storage;
+    try {
+        storage = window[type];
+        const x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch (e) {
+        return e instanceof DOMException && (
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
+
+
 class Game extends Component {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
@@ -30,7 +56,23 @@ class Game extends Component {
             ],
             credits: 0,
         }
+
+        if (storageAvailable('localStorage')) {
+            if (localStorage.getItem("state") !== null) {
+                let goalState = JSON.parse(localStorage.getItem("state"));
+                goalState.credits = Math.max(0, goalState.credits-5)
+                this.state = goalState;
+            }
+        }
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (storageAvailable('localStorage')) {
+            // Yippee! We can use localStorage awesomeness
+            localStorage.setItem("state", JSON.stringify(this.state));
+        }
+    }
+
 
     getCoordFromStringRep = (stringRep) => {
         console.assert(stringRep.length === 4);
@@ -320,7 +362,6 @@ class Game extends Component {
 
     rotateHoldingBayItem = (i) => {
         let holdingBayRepresentation = this.state.holdingBayStorage;
-        console.log(holdingBayRepresentation[i])
         let temp = holdingBayRepresentation[i].item.width;
         holdingBayRepresentation[i].item.width = holdingBayRepresentation[i].item.height;
         holdingBayRepresentation[i].item.height = temp;
@@ -427,7 +468,6 @@ class Game extends Component {
                 continue;
             }
             if (holdingBayRepresentation[i].item.name === item.name) {
-                console.log("FOUND ITEM " + i + " MATCHES ,SETTING TO NULL")
                 holdingBayRepresentation[i] = null;
                 this.setState({
                     holdingBayStorage: holdingBayRepresentation,
@@ -436,7 +476,6 @@ class Game extends Component {
                 return true;
             }
         }
-        console.log("ITEM NOT FOUND - ABORTING");
         return false;
     }
 
@@ -447,15 +486,12 @@ class Game extends Component {
     }
 
     auctionHoldingBayItems = () => {
-        // todo implement item auctioning
-        console.log(this.state.holdingBayStorage)
         let total = 0;
         for (let obj of this.state.holdingBayStorage) {
             if (obj === null) {continue;}
             total += obj.item.value;
         }
         total = Math.floor(total * (0.5 + Math.random()))
-        console.log("giving " + total + " credits")
         this.setState({
             credits: this.state.credits + total,
             holdingBayStorage: [null,null,null],
