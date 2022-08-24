@@ -63,7 +63,7 @@ class TradingZone extends Component {
 
     generateBuyItems = () => {
         // get some items to sell
-        let items = itemFunctions.getNItemsOfRarityUpTo(6, 1)
+        let items = itemFunctions.getNItemsOfRarityUpTo(6, 2)
         items = items.map((item) => {
             let itemValue = item.value;
             let low = Math.floor(itemValue * 1)
