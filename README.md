@@ -6,6 +6,13 @@ Built using ReactJS, a frontend webpage to simulate a trading game with a spatia
 
 Makes use of React components and state to render the UI to the user.
 
+# Features
+
+- ReactJS to render UI and handle storage state
+- Spatial inventory system which supports items of arbitrary sizes - and allows rotation of items
+- Atomic transactional system using React states - so if a transaction fails, the data is unchanged
+- Use of browser localstorage to persist data even when closed down
+
 # Major takeaways
 
 - I struggled to manage all of my data within my React classes - ending up with ugly callback functions going up and down my React hierarchy. I suppose this is one of the reasons React is a UI framework rather than a game development framework.

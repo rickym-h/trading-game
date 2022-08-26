@@ -273,8 +273,7 @@ class Game extends Component {
         return cells;
     }
 
-    handleDragStart = (ev) => {
-        //console.log("GAME RECEIVED: " + ev.dataTransfer.getData("UUID"))
+    handleDragStart = () => {
     }
 
     // Checks what location the item has been placed in, and spawns it in depending on the location
