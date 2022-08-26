@@ -5,6 +5,9 @@ import "./Game.css"
 import TradingZone from "./components/TradingZone";
 import itemFunctions from "./items/items";
 
+
+// Helper class to check if coordinates can match or not - works by placing coordinates in a set that will not contain
+// duplicate coords
 class ObjectSet extends Set{
     add(elem){
         return super.add(typeof elem === 'object' ? JSON.stringify(elem) : elem);
@@ -66,19 +69,20 @@ class Game extends Component {
         }
     }
 
+    // Updates localstorage if the game state is updated
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (storageAvailable('localStorage')) {
-            // Yippee! We can use localStorage awesomeness
             localStorage.setItem("state", JSON.stringify(this.state));
         }
     }
 
-
+    // Converts string representations of coords and returns a relevant tuple
     getCoordFromStringRep = (stringRep) => {
         console.assert(stringRep.length === 4);
         return [Number(stringRep.at(1)),Number(stringRep.at(3))]
     }
 
+    // Takes as object and a target position and checks that the item can be spawned there.
     canObjectBePlacedInLocation = (object, targetLocation, UUID) => {
         switch (targetLocation.at(0)) {
             case 's':
@@ -144,6 +148,7 @@ class Game extends Component {
         return potentialStorage
     }
 
+    // Searches all game storage to find and return the item with the mathcing UUID
     getItemFromUUID = (UUID) => {
         for (let object of this.state.cargoStorage) {
             if (object.UUID === UUID) {
@@ -170,32 +175,8 @@ class Game extends Component {
         return ("ERROR : NO ITEM FOUND WITH UUID: " + UUID)
     }
 
-    deleteItemByUUID = (UUID) => {
-        let len;
-        let cargoStorage = this.state.cargoStorage;
-        len = cargoStorage.length;
-        cargoStorage = cargoStorage.filter((object) => {return object.UUID !== UUID;})
-        if (cargoStorage.length !== len) {
-            this.setState({
-                cargoStorage: cargoStorage,
-            })
-            return;
-        }
-
-
-        let strongholdStorage = this.state.secureStorage;
-        len = strongholdStorage.length;
-        strongholdStorage = strongholdStorage.filter((object) => {return object.UUID !== UUID;})
-        if (strongholdStorage.length !== len) {
-            this.setState({
-                secureStorage: strongholdStorage,
-            })
-            return;
-        }
-
-        return ("ERROR : NO ITEM FOUND WITH UUID: " + UUID)
-    }
-
+    // Goes through all storage, removes the item with a given UUID, then returns the representation of all the storage
+    // in the game
     getAllStoragesWithDeletedUUID = (UUID) => {
         let newCargoStorage = this.state.cargoStorage;
         newCargoStorage = newCargoStorage.filter((object) => {return object.UUID !== UUID;})
@@ -219,6 +200,7 @@ class Game extends Component {
         }
     }
 
+    // Gets a random coord in a square grid of a given size
     getRandomCoord = (range) => {
         return [Math.floor(Math.random()*range), Math.floor(Math.random()*range)]
     }
@@ -274,6 +256,8 @@ class Game extends Component {
         return true;
     }
 
+    // Calculates the coordinates that an object takes up from its origin (e.g. a 1x1 object will use cells [0,0], but
+    // a 2x1 object will use cells [0,0],[1,0]
     getCellsOfObject = (object) => {
         let width = object.item.width;
         let height = object.item.height;
@@ -293,6 +277,7 @@ class Game extends Component {
         //console.log("GAME RECEIVED: " + ev.dataTransfer.getData("UUID"))
     }
 
+    // Checks what location the item has been placed in, and spawns it in depending on the location
     spawnItemInPos = (item, pos, UUID) => {
         let allStorageRep = this.getAllStoragesWithDeletedUUID(UUID)
         switch (pos.at(0)) {
@@ -343,16 +328,14 @@ class Game extends Component {
         }
     }
 
+    // HTML event for handling dropping the item somewhere in the game
     handleDragDrop = (ev) => {
-
-        // console.log("dragged item UUID: " + ev.dataTransfer.getData("UUID"))
+        // Checks whether the item can be placed where it is - and places if possible
         let UUID = ev.dataTransfer.getData("UUID")
         let objectItem = this.getItemFromUUID(UUID)
         let targetPos = ev.target.id
 
         if (this.canObjectBePlacedInLocation(objectItem, targetPos, UUID)) {
-            // Deleting old item
-            // Spawn new item
             this.spawnItemInPos(objectItem, targetPos, UUID)
 
         } else {
@@ -360,6 +343,7 @@ class Game extends Component {
         }
     }
 
+    // Rotates the item in the holding bay with a given index
     rotateHoldingBayItem = (i) => {
         let holdingBayRepresentation = this.state.holdingBayStorage;
         let temp = holdingBayRepresentation[i].item.width;
@@ -370,6 +354,8 @@ class Game extends Component {
         })
     }
 
+    // Gives credits as a debug function - will be removed on production
+    // todo remove when finished
     DEBUG_GIVE_100_CREDITS = () => {
         this.setState({
             credits: this.state.credits+100,
@@ -395,7 +381,7 @@ class Game extends Component {
         return true;
     }
 
-
+    // Exchanges items for items if there is valid space and initial items in holding bay
     transactItems = (itemsToSpawn, itemsToRemove) => {
         itemsToSpawn = [...itemsToSpawn]
         itemsToRemove = [...itemsToRemove]
@@ -456,12 +442,16 @@ class Game extends Component {
         })
     }
 
+    // Allows the user to buy a single item if they have valid space and credits
+    // Returns false if failed - true if valid.
     userPurchaseSingleItem = (item, price) => {
         if (price > this.state.credits) {
             console.log("USER DOES NOT HAVE ENOUGH CREDITS - ABORTING PURCHASE")
             return false;
         }
         let holdingBayStorage = this.state.holdingBayStorage;
+
+        // Finds the first empty space and places the item - then performs transaction and returns.
         for (let i = 0; i < holdingBayStorage.length; i++) {
             if (holdingBayStorage[i] === null) {
                 holdingBayStorage[i] = {
@@ -479,12 +469,16 @@ class Game extends Component {
         return false;
     }
 
+    //  Allows the user to sell an item if it is valid and within the holding bay - gives relevant credits to the user
+    //  too. Returns false if failed - true if valid.
     userSellSingleItem = (item, price) => {
         let holdingBayRepresentation = this.state.holdingBayStorage;
+        // Loop through every item in the holding bay to check if it matches the item to sell
         for (let i = 0; i < holdingBayRepresentation.length; i++) {
             if (holdingBayRepresentation[i] === null) {
                 continue;
             }
+            // If it is the valid item to sell - exchanges it for null and some credits before returning
             if (holdingBayRepresentation[i].item.name === item.name) {
                 holdingBayRepresentation[i] = null;
                 this.setState({
@@ -497,18 +491,22 @@ class Game extends Component {
         return false;
     }
 
+    // Spends some credits for an arbitrary transaction
     spendNCredits = (amount) => {
         this.setState({
             credits: this.state.credits-amount
         })
     }
 
+    // Auctions off items in the holding bay at a random value
     auctionHoldingBayItems = () => {
+        // calculates the total 'true' value of the items
         let total = 0;
         for (let obj of this.state.holdingBayStorage) {
             if (obj === null) {continue;}
             total += obj.item.value;
         }
+        // Randomises it within a range of +-50% - and then performs transaction.
         total = Math.floor(total * (0.5 + Math.random()))
         this.setState({
             credits: this.state.credits + total,
@@ -516,6 +514,7 @@ class Game extends Component {
         })
     }
 
+    // Give user credits of abritrary amount
     giveCredits = (amount) => {
         this.setState({
             credits: this.state.credits+amount
