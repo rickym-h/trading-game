@@ -400,9 +400,15 @@ class Game extends Component {
         itemsToSpawn = [...itemsToSpawn]
         itemsToRemove = [...itemsToRemove]
 
+        // Creates copy of the holding bay representation to manipulate to change the representation
+        // This also ensured atomicity - it only pushes the trade if every aspect of it is valid.
         let holdingBayRespresentation = this.state.holdingBayStorage;
         holdingBayRespresentation = holdingBayRespresentation.filter((o)=> {return o !== null;})
+
+        // Remove the items in the holding bay. If it does not find the item it logs to console why and then returns.
         while (itemsToRemove.length > 0) {
+            // Get next item and filter from the holding bay representation - checking that only one is removed for each
+            // item
             let itemToRemove = itemsToRemove.pop();
             let len = holdingBayRespresentation.length;
             holdingBayRespresentation = holdingBayRespresentation.filter((o)=>{
@@ -411,15 +417,25 @@ class Game extends Component {
             if (holdingBayRespresentation.length === len) {
                 console.log("Item not in holding bay - ABORTING:")
                 return;
+            } else if (holdingBayRespresentation.length < len-1) {
+                // Correct over-filtering of items if too many were removed in the filter
+                while (holdingBayRespresentation.length !== len-1) {
+                    let newObject = {
+                        UUID: crypto.randomUUID(),
+                        item: itemToRemove,
+                    }
+                    holdingBayRespresentation.push(newObject)
+                }
             }
         }
-        console.log("holdingBayRespresentation now has removed items - checking for space to place itemsToSpawn")
-        console.log(holdingBayRespresentation)
+
+        // Checks that with the removed items - there is still space left to spawn the new items
         if (holdingBayRespresentation.length + itemsToSpawn.length > 3) {
             console.log("NOT ENOUGH SPACE IN STORAGE TO FINISH TRANSACTION - ABORTING UNIQUE TRADE")
             return;
         }
 
+        // Spawns the new items into the holding bay - assigning new UUIDs since we only have the raw item data.
         for (let itemToSpawn of itemsToSpawn) {
             let newObject = {
                 UUID: crypto.randomUUID(),
@@ -428,11 +444,13 @@ class Game extends Component {
             holdingBayRespresentation.push(newObject)
         }
 
+        // places back null values to ensure the length of the holding bay is always 3 (including null empty items)
         let numOfNullItemsToAdd = 3-holdingBayRespresentation.length;
         for (let i = 0; i<numOfNullItemsToAdd; i++) {
             holdingBayRespresentation.push(null)
         }
 
+        // Finally sets the state since it is a valid transaction
         this.setState({
             holdingBayStorage: holdingBayRespresentation,
         })
