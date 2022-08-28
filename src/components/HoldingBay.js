@@ -10,38 +10,40 @@ class HoldingBay extends Component {
     }
 
 
+    // Makes sure that the dragged object has a reference to the UUID and so can find the original dragged object
     handleDragStart = (ev) => {
         ev.dataTransfer.setData("UUID", ev.target.id)
     }
 
+    // Makes sure the target can accept drag drops
     handleDragOver = (ev) => {
         ev.preventDefault();
     }
 
+    // Calls parent function to handle the transfer of data when dropping item
     handleDragDrop = (ev) => {
         this.props.handleDragDrop(ev)
     }
 
+    // Calls parent function to handle transfer of data when auctioning items
     handleAuctionItems = () => {
         console.log("AUCTIONING ITEMS")
         this.props.auctionHoldingBayItems();
     }
 
+    // Takes the items from the holding bay data - and constructs the DOM representation of the holding bay.
     generateStorageRepresentation = () => {
         let storage = [];
         for (let i = 0; i < this.props.holdingBayStorage.length; i++) {
             let object = this.props.holdingBayStorage[i];
             if (object !== null) {
-                // const objectStyle = {
-                //
-                // }
+                // Place the item down if it is not empty - and provide a button to rotate the item
                 storage.push(
                     <div className={"holdingBay-row"} key={`h:${i}`}>
                         <ItemDisplay
                             object={object}
                             draggable={true}
                             onDragStart={this.handleDragStart}
-                            //providedStyles={objectStyle}
                         />
                          <button
                              className={"rotateButton"}
@@ -50,6 +52,7 @@ class HoldingBay extends Component {
                     </div>
                 )
             } else {
+                // Place an empty item if it is empty - the rotate button should be disabled in this case
                 storage.push(
                     <div className={"holdingBay-row"} key={`h:${i}`}>
                         <div
@@ -71,7 +74,7 @@ class HoldingBay extends Component {
     render() {
         let storageRepresentation = this.generateStorageRepresentation();
         return (
-            // todo add area to sell/bin items (selling will be at a random fraction of value (e.g. galactic auction so random but wont need trader)) since not specific trade
+            // Show the holding bay + a button at the bottom to auction off items.
             <div className={"HoldingBay"}>
                 {storageRepresentation}
                 <button className={"TradeItemComponentButton"} onClick={this.handleAuctionItems}>Auction off Items</button>
